@@ -1,6 +1,22 @@
+/*
+ * Copyright (C) 2016 Tina Keil (apps4research) & Miriam Koschate-Reis.
+ * All rights reserved.
+ *
+ * Licensed under the BSD 3-Clause License (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ *
+ * https://opensource.org/licenses/BSD-3-Clause
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.ac.exeter.contactlogger;
 
 import android.app.ActionBar;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -24,19 +40,18 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 
+import uk.ac.exeter.contactlogger.dialogs.FailedDialog;
+import uk.ac.exeter.contactlogger.dialogs.SuccessDialog;
 import uk.ac.exeter.contactlogger.utils.DBAdapter;
 import uk.ac.exeter.contactlogger.utils.customTileProvider;
 import uk.ac.exeter.contactlogger.utils.offlineTileProvider;
 
-/**
- * Created by apps4research on 2015-11-12.
- */
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private final static String TAG = MapActivity.class.getName();
+    FragmentManager fm = getFragmentManager();
 
     private static final int CUSTOM_MAP_TILE_HEIGHT = 256;
     private static final int CUSTOM_MAP_TILE_WIDTH = 256;
@@ -53,13 +68,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private float old_acc;
     private TextView info_box;
     private Button close_btn;
-    private String prefs_name, overlay_url, mapbox_id;
-    private customTileProvider mTileProvider;
-    private offlineTileProvider offTileProvider;
-    private TileOverlay tileOverlay;
+    private String overlay_url;
     private SharedPreferences settings;
-    //private int minZoom = -1;
-    //private int maxZoom = -1;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -90,7 +100,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         close_btn = (Button) findViewById(R.id.btn_x_close);
 
         //if infobox was closed once, then dont show them again
-        prefs_name = getResources().getString(R.string.PREFS_NAME);
+        String prefs_name = getResources().getString(R.string.PREFS_NAME);
         settings = getSharedPreferences(prefs_name, 0);
         Boolean show_infobox = settings.getBoolean("show_infobox", true);
         mapType = settings.getInt("mapType", 4); //default is Google Hypbrid
@@ -118,7 +128,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void updateMap() {
 
         //define/construct customTile request urls
-        mapbox_id = getString(R.string.mapbox_id);
+        String mapbox_id = getString(R.string.mapbox_id);
         String mapbox_token = getString(R.string.mapbox_token);
         String mapbox_url1 = getString(R.string.mapbox_url1);
         String mapbox_url2 = getString(R.string.mapbox_url2);
@@ -129,6 +139,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         map.clear();
         map.setMapType(mapType);
 
+        offlineTileProvider offTileProvider;
+
         if (customOverlay > 0 && customOverlay < 3) {
             //determine customTileProvider
             if (customOverlay == 1) {
@@ -138,17 +150,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
 
             // create the tileProvider
-            mTileProvider = new customTileProvider(
+            customTileProvider mTileProvider = new customTileProvider(
                     CUSTOM_MAP_TILE_WIDTH, CUSTOM_MAP_TILE_HEIGHT, overlay_url);
             offTileProvider = new offlineTileProvider(this);
 
             //add the offline map as a basis tile
-            tileOverlay = map.addTileOverlay(new TileOverlayOptions()
+            map.addTileOverlay(new TileOverlayOptions()
                     .tileProvider(offTileProvider)
                     .zIndex(BASE_MAP_TILE_INDEX));
 
             //add the selected tile provider ontop of offline map
-            tileOverlay = map.addTileOverlay(new TileOverlayOptions()
+            map.addTileOverlay(new TileOverlayOptions()
                     .tileProvider(mTileProvider)
                     .zIndex(CUSTOM_MAP_TILE_INDEX));
 
@@ -158,7 +170,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             offTileProvider = new offlineTileProvider(this);
 
             // add the Provider in the offline Map
-            tileOverlay = map.addTileOverlay(new TileOverlayOptions().
+            map.addTileOverlay(new TileOverlayOptions().
                     tileProvider(offTileProvider));
         }
 
@@ -342,16 +354,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public void updateContact(View view) {
-        //update last db entry
-        DBAdapter db = new DBAdapter(this);
-        db.open();
-        if (db.updateContactLocation(row_id, corr_lat, corr_lng)) {
-            Toast.makeText(this, getString(R.string.loc_update_ok), Toast.LENGTH_LONG).show();
-
-        } else {
-            Toast.makeText(this, getString(R.string.loc_update_fail), Toast.LENGTH_LONG).show();
-        }
-        db.close();
 
         //if user updated location, save last location to shared prefs
         if (corr_lat != 0 && corr_lng != 0) {
@@ -361,10 +363,28 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             editor.apply();
         }
 
-        //go back to MainActivity
-        Intent showMain = new Intent(this, MainActivity.class);
-        this.finish();
-        startActivity(showMain);
+        //update last db entry
+        DBAdapter db = new DBAdapter(this);
+        db.open();
+        if (db.updateContactLocation(row_id, corr_lat, corr_lng)) {
+            showSuccessDialog(getString(R.string.log_insert_ok),0);
+        } else {
+            showFailedDialog(getString(R.string.log_insert_failed));
+        }
+        db.close();
+    }
+
+    private void showSuccessDialog(String message, int which_btn) {
+        SuccessDialog SuccessFormFragment = new SuccessDialog();
+        SuccessFormFragment.setMessage(message, which_btn);
+        SuccessFormFragment.setCancelable(false);
+        SuccessFormFragment.show(fm, TAG);
+    }
+
+    private void showFailedDialog(String message) {
+        FailedDialog FailedFormFragment = new FailedDialog();
+        FailedFormFragment.setMessage(message);
+        FailedFormFragment.show(fm, TAG);
     }
 
     //Check if online or offline

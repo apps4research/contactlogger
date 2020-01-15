@@ -26,6 +26,7 @@
 
         <EditText
             android:id="@+id/hour_start"
+            android:hint="@string/hours"
             android:layout_width="56dip"
             android:layout_height="30dip"
             android:layout_toRightOf="@+id/start_time"
@@ -42,6 +43,7 @@
 
         <EditText
             android:id="@+id/minute_start"
+            android:hint="@string/minutes"
             android:layout_width="56dip"
             android:layout_height="30dip"
             android:layout_marginLeft="10dip"
@@ -94,6 +96,7 @@
 
         <EditText
             android:id="@+id/hour_stop"
+            android:hint="@string/hours"
             android:layout_width="56dip"
             android:layout_height="30dip"
             android:layout_toRightOf="@+id/stop_time"
@@ -110,6 +113,7 @@
 
         <EditText
             android:id="@+id/minute_stop"
+            android:hint="@string/minutes"
             android:layout_width="56dip"
             android:layout_height="30dip"
             android:layout_marginLeft="10dip"
@@ -161,6 +165,7 @@
 
         <EditText
             android:id="@+id/hour_int"
+            android:hint="@string/alarm_int_hours"
             android:layout_width="56dip"
             android:layout_height="30dip"
             android:layout_toRightOf="@+id/int_time"
@@ -177,6 +182,7 @@
 
         <EditText
             android:id="@+id/minute_int"
+            android:hint="@string/alarm_int_mins"
             android:layout_width="56dip"
             android:layout_height="30dip"
             android:layout_marginLeft="10dip"

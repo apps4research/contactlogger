@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iconView"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="25dip"
+        android:contentDescription="@string/hurray"
+        android:background="@drawable/success" />
+
+    <TextView
+        android:id="@+id/success_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iconView"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="5dip"
+        android:textSize="18sp" />
+
+</RelativeLayout>

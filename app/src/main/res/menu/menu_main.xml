@@ -1,39 +1,43 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
 
     <item
         android:id="@+id/action_camera"
+        android:orderInCategory="100"
         android:icon="@drawable/btn_camera"
         android:title="@string/action_camera"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_show_photos"
         android:title="@string/title_photolist"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_daily"
         android:title="@string/action_daily"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_loc_settings"
         android:title="@string/action_loc_settings"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_admin"
         android:title="@string/action_admin"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_alarm"
         android:title="@string/action_alarm"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_about"
         android:title="@string/action_about"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
 </menu>

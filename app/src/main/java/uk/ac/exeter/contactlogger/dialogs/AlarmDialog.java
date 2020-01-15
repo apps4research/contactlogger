@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Tina Keil (apps4research) & Miriam Koschate-Reis.
+ * All rights reserved.
+ *
+ * Licensed under the BSD 3-Clause License (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ *
+ * https://opensource.org/licenses/BSD-3-Clause
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.ac.exeter.contactlogger.dialogs;
 
 import android.app.Activity;
@@ -12,7 +27,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputFilter;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,9 +38,6 @@ import uk.ac.exeter.contactlogger.R;
 import uk.ac.exeter.contactlogger.utils.AlarmService;
 import uk.ac.exeter.contactlogger.utils.InputFilterMinMax;
 
-/**
- * Created by apps4research on 2015-11-12.
- */
 public class AlarmDialog extends DialogFragment {
 
     private static final String TAG = AlarmDialog.class.getName();
@@ -54,9 +65,7 @@ public class AlarmDialog extends DialogFragment {
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.alarm_layout, null);
+        final View dialogView = View.inflate(getActivity(),R.layout.alarm_layout, null);
 
         //clear start alarm input values
         Button btn_alarm_start = (Button) dialogView.findViewById(R.id.clear_start);
@@ -64,7 +73,7 @@ public class AlarmDialog extends DialogFragment {
         Button btn_alarm_int = (Button) dialogView.findViewById(R.id.clear_int);
         RadioGroup alarm_active = (RadioGroup) dialogView.findViewById(R.id.alarm_active);
 
-        //set numberical input limits to text fields
+        //set numerical input limits to text fields
         hour_start = (EditText) dialogView.findViewById(R.id.hour_start);
         hour_start.setFilters(new InputFilter[]{new InputFilterMinMax("0", "23")});
         hour_stop = (EditText) dialogView.findViewById(R.id.hour_stop);
@@ -209,15 +218,19 @@ public class AlarmDialog extends DialogFragment {
     }
 
     private void clear_alarm(String type) {
-        if (type.equals("start")) {
-            hour_start.setText("");
-            minute_start.setText("");
-        } else if (type.equals("stop")) {
-            hour_stop.setText("");
-            minute_stop.setText("");
-        } else if (type.equals("int")) {
-            hour_int.setText("");
-            minute_int.setText("");
+        switch (type) {
+            case "start":
+                hour_start.setText("");
+                minute_start.setText("");
+                break;
+            case "stop":
+                hour_stop.setText("");
+                minute_stop.setText("");
+                break;
+            case "int":
+                hour_int.setText("");
+                minute_int.setText("");
+                break;
         }
     }
 

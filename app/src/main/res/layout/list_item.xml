@@ -13,5 +13,5 @@
         android:textSize="16sp"
         android:lineSpacingExtra="4dip"
         android:linksClickable="true"
-        android:autoLink="web|email|phone" />
+        android:autoLink="web|email" />
 </LinearLayout>

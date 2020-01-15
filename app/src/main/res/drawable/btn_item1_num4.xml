@@ -1,0 +1,6 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- button background toggle -->
+    <item android:drawable="@drawable/bg_item1" />
+    <!-- button icon -->
+    <item android:drawable="@drawable/toggle_item1_num4" />
+</layer-list>

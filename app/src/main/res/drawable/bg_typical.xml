@@ -1,6 +1,9 @@
-<shape
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners android:radius="@dimen/btn_corner" />
-    <solid android:color="@color/bg_typical_icon" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/btn_corner" />
+            <solid android:color="@color/btn_bg_typical_off" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/bg_on" android:state_checked="true" />
+</selector>

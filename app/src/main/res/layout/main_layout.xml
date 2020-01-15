@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <!-- Type / Setting -->
         <RelativeLayout
@@ -43,7 +43,7 @@
 
             <HorizontalScrollView
                 android:id="@+id/hsv_type"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
                 android:measureAllChildren="false"
@@ -51,7 +51,7 @@
 
                 <RelativeLayout
                     android:id="@+id/innerlayer_type"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingTop="25dip">
 
@@ -264,7 +264,7 @@
                         android:layout_alignTop="@+id/btn_relate_3"
                         android:layout_marginLeft="7dip"
                         android:layout_toRightOf="@+id/btn_relate_3"
-                        android:background="@drawable/btn_stranger"
+                        android:background="@drawable/btn_customer"
                         android:contentDescription="@string/btn_relate_4"
                         android:minHeight="@dimen/btn_height"
                         android:minWidth="@dimen/btn_width" />
@@ -277,7 +277,7 @@
                         android:layout_alignTop="@+id/btn_relate_4"
                         android:layout_marginLeft="7dip"
                         android:layout_toRightOf="@+id/btn_relate_4"
-                        android:background="@drawable/btn_clerk"
+                        android:background="@drawable/btn_stranger"
                         android:contentDescription="@string/btn_relate_5"
                         android:minHeight="@dimen/btn_height"
                         android:minWidth="@dimen/btn_width" />
@@ -290,7 +290,7 @@
                         android:layout_alignTop="@+id/btn_relate_5"
                         android:layout_marginLeft="7dip"
                         android:layout_toRightOf="@+id/btn_relate_5"
-                        android:background="@drawable/btn_neighbour"
+                        android:background="@drawable/btn_clerk"
                         android:contentDescription="@string/btn_relate_6"
                         android:minHeight="@dimen/btn_height"
                         android:minWidth="@dimen/btn_width" />
@@ -303,7 +303,7 @@
                         android:layout_alignTop="@+id/btn_relate_6"
                         android:layout_marginLeft="7dip"
                         android:layout_toRightOf="@+id/btn_relate_6"
-                        android:background="@drawable/btn_partner"
+                        android:background="@drawable/btn_neighbour"
                         android:contentDescription="@string/btn_relate_7"
                         android:minHeight="@dimen/btn_height"
                         android:minWidth="@dimen/btn_width" />
@@ -316,7 +316,7 @@
                         android:layout_alignTop="@+id/btn_relate_7"
                         android:layout_marginLeft="7dip"
                         android:layout_toRightOf="@+id/btn_relate_7"
-                        android:background="@drawable/btn_relative"
+                        android:background="@drawable/btn_partner"
                         android:contentDescription="@string/btn_relate_8"
                         android:minHeight="@dimen/btn_height"
                         android:minWidth="@dimen/btn_width" />
@@ -329,8 +329,21 @@
                         android:layout_alignTop="@+id/btn_relate_8"
                         android:layout_marginLeft="7dip"
                         android:layout_toRightOf="@+id/btn_relate_8"
-                        android:background="@drawable/btn_question_rel"
+                        android:background="@drawable/btn_relative"
                         android:contentDescription="@string/btn_relate_9"
+                        android:minHeight="@dimen/btn_height"
+                        android:minWidth="@dimen/btn_width" />
+
+                    <ToggleButton
+                        android:id="@+id/btn_relate_10"
+                        style="@style/toggleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/btn_relate_9"
+                        android:layout_marginLeft="7dip"
+                        android:layout_toRightOf="@+id/btn_relate_9"
+                        android:background="@drawable/btn_question_rel"
+                        android:contentDescription="@string/btn_relate_10"
                         android:minHeight="@dimen/btn_height"
                         android:minWidth="@dimen/btn_width" />
 
@@ -435,9 +448,10 @@
                         android:textColor="@color/btn_icon_genage_off"/>
 
                     <EditText
+                        android:id="@+id/age_input"
+                        android:hint=""
                         android:layout_width="78dip"
                         android:layout_height="25dip"
-                        android:id="@+id/age_input"
                         android:ems="5"
                         android:padding="2dip"
                         android:cursorVisible="false"
@@ -480,7 +494,8 @@
             android:paddingBottom="@dimen/frame_bottom_padding"
             android:paddingEnd="15dip"
             android:paddingStart="@dimen/frame_left_padding"
-            android:paddingTop="@dimen/frame_top_padding">
+            android:paddingTop="@dimen/frame_top_padding"
+            tools:ignore="MissingPrefix">
 
             <TextView
                 android:id="@+id/hl_dur"
@@ -490,61 +505,186 @@
                 android:textAllCaps="true"
                 android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/info_duration"
+            <!-- Hour -->
+            <RelativeLayout
+                android:id="@+id/box_hour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/dur_seekbar_bg"
-                android:layout_alignParentTop="true"
-                android:gravity="right"
-                android:textSize="13sp" />
+                android:layout_marginTop="25dip"
+                android:background="@drawable/bg_on"
+                android:minHeight="72dip"
+                android:minWidth="52dip">
 
-            <RelativeLayout
-                android:id="@+id/dur_seekbar_bg"
-                android:layout_width="wrap_content"
-                android:layout_height="38dip"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="68dip"
-                android:background="@drawable/bg_seekbar_dur">
-
-                <SeekBar
-                    android:id="@+id/dur_seekbar"
-                    android:layout_width="fill_parent"
+                <TextView
+                    android:id="@+id/txt_hour"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:max="24"
-                    android:progress="12"
-                    android:progressTint="@color/colorPrimaryDark"
-                    android:thumb="@drawable/circle_seekbar" />
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/hours"
+                    android:layout_marginTop="4dip"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/duration_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_hour"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dip"
+                    android:textSize="48sp"
+                    fontPath="fonts/digitalism.ttf" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/hour_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dip"
+                    android:layout_marginEnd="6dip"
+                    android:layout_marginStart="6dip"
+                    android:layout_marginTop="25dip"
+                    android:layout_toRightOf="@id/box_hour"
+                    android:background="@drawable/btn_plus"
+                    android:minHeight="28dip"
+                    android:minWidth="43dip" />
+
+                <Button
+                    android:id="@+id/hour_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hour_plus"
+                    android:layout_marginEnd="6dip"
+                    android:layout_marginStart="6dip"
+                    android:layout_toRightOf="@id/box_hour"
+                    android:background="@drawable/btn_minus"
+                    android:minHeight="28dip"
+                    android:minWidth="43dip" />
+
+            <!-- Minutes -->
+            <RelativeLayout
+                android:id="@+id/box_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:layout_toRightOf="@id/hour_plus"
+                android:background="@drawable/bg_on"
+                android:minHeight="72dip"
+                android:minWidth="52dip">
+
+                <TextView
+                    android:id="@+id/txt_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/minutes"
+                    android:layout_marginTop="4dip"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/duration_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_min"
+                    android:layout_marginTop="5dip"
+                    fontPath="fonts/digitalism.ttf"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="48sp" />
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/dur_img"
-                android:layout_width="@dimen/btn_width"
-                android:layout_height="@dimen/btn_width"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:contentDescription="@string/pstatus_desc"
-                android:src="@drawable/icon_duration12" />
+            <Button
+                android:id="@+id/min_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:layout_marginBottom="7dip"
+                android:layout_toRightOf="@id/box_min"
+                android:background="@drawable/btn_plus"
+                android:layout_marginStart="6dip"
+                android:layout_marginEnd="6dip"
+                android:minHeight="28dip"
+                android:minWidth="42dip" />
+
+            <Button
+                android:id="@+id/min_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/box_min"
+                android:layout_below="@id/min_plus"
+                android:background="@drawable/btn_minus"
+                android:layout_marginStart="6dip"
+                android:layout_marginEnd="6dip"
+                android:minHeight="28dip"
+                android:minWidth="42dip" />
+
+            <!-- Second -->
+            <RelativeLayout
+                android:id="@+id/box_sec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:layout_toRightOf="@id/min_plus"
+                android:minHeight="72dip"
+                android:minWidth="52dip"
+                android:background="@drawable/bg_on">
+
+                <TextView
+                    android:id="@+id/txt_sec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/seconds"
+                    android:layout_marginTop="4dip"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/duration_sec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_sec"
+                    fontPath="fonts/digitalism.ttf"
+                    android:layout_marginTop="5dip"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="48sp" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/sec_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:layout_toRightOf="@id/box_sec"
+                android:layout_marginStart="6dip"
+                android:layout_marginBottom="7dip"
+                android:background="@drawable/btn_plus"
+                android:minHeight="28dip"
+                android:minWidth="42dip" />
+
+            <Button
+                android:id="@+id/sec_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/box_sec"
+                android:layout_below="@id/sec_plus"
+                android:layout_marginStart="6dip"
+                android:background="@drawable/btn_minus"
+                android:minHeight="28dip"
+                android:minWidth="42dip" />
 
         </RelativeLayout>
 
-        <!-- Typicality -->
+        <!-- Group Typicality new -->
         <RelativeLayout
             android:id="@+id/FrameTypicality"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/frame_height"
             android:layout_below="@id/FrameDuration"
-            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/frame_bottom_margin"
             android:layout_marginEnd="@dimen/frame_right_margin"
             android:layout_marginStart="@dimen/frame_left_margin"
             android:layout_marginTop="@dimen/frame_top_margin"
             android:background="@drawable/bg_areas"
-            android:minHeight="@dimen/frame_height_small"
             android:paddingBottom="@dimen/frame_bottom_padding"
-            android:paddingEnd="15dip"
+            android:paddingEnd="@dimen/frame_right_padding"
             android:paddingStart="@dimen/frame_left_padding"
             android:paddingTop="@dimen/frame_top_padding">
 
@@ -560,57 +700,88 @@
                 android:id="@+id/info_typical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/typical_seekbar_bg"
-                android:layout_alignParentTop="true"
-                android:gravity="right"
+                android:layout_alignParentEnd="true"
+                android:text="@string/no_selection"
                 android:textSize="13sp" />
 
-            <RelativeLayout
-                android:id="@+id/typical_seekbar_bg"
+            <ToggleButton
+                android:id="@+id/btn_typical_1"
+                style="@style/toggleButton"
                 android:layout_width="wrap_content"
-                android:layout_height="38dip"
-                android:layout_marginRight="68dip"
-                android:layout_marginTop="27dip"
-                android:background="@drawable/bg_seekbar">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:background="@drawable/btn_typical1"
+                android:contentDescription="@string/btn_typical_1"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
 
-                <SeekBar
-                    android:id="@+id/typical_seekbar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:max="10"
-                    android:progress="5"
-                    android:progressTint="@color/colorPrimaryDark"
-                    android:thumb="@drawable/circle_seekbar" />
-            </RelativeLayout>
+            <ToggleButton
+                android:id="@+id/btn_typical_2"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_typical_1"
+                android:layout_marginLeft="7dip"
+                android:layout_toRightOf="@+id/btn_typical_1"
+                android:background="@drawable/btn_typical2"
+                android:contentDescription="@string/btn_typical_2"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
 
-            <ImageView
-                android:id="@+id/typical_img"
-                android:layout_width="@dimen/btn_width"
-                android:layout_height="@dimen/btn_height"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/pstatus_desc"
-                android:src="@drawable/icon_typical" />
+            <ToggleButton
+                android:id="@+id/btn_typical_3"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_typical_2"
+                android:layout_marginLeft="7dip"
+                android:layout_toRightOf="@+id/btn_typical_2"
+                android:background="@drawable/btn_typical3"
+                android:contentDescription="@string/btn_typical_3"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
+
+            <ToggleButton
+                android:id="@+id/btn_typical_4"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_typical_3"
+                android:layout_marginLeft="7dip"
+                android:layout_toRightOf="@+id/btn_typical_3"
+                android:background="@drawable/btn_typical4"
+                android:contentDescription="@string/btn_typical_4"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
+
+            <ToggleButton
+                android:id="@+id/btn_typical_5"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_typical_4"
+                android:layout_marginLeft="7dip"
+                android:layout_toRightOf="@+id/btn_typical_4"
+                android:background="@drawable/btn_typical5"
+                android:contentDescription="@string/btn_typical_5"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
 
         </RelativeLayout>
 
-        <!-- Relative Status -->
+        <!-- Relative Status new -->
         <RelativeLayout
             android:id="@+id/FrameStatus"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/frame_height"
             android:layout_below="@id/FrameTypicality"
-            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/frame_bottom_margin"
             android:layout_marginEnd="@dimen/frame_right_margin"
             android:layout_marginStart="@dimen/frame_left_margin"
             android:layout_marginTop="@dimen/frame_top_margin"
             android:background="@drawable/bg_areas"
-            android:minHeight="@dimen/frame_height_small"
             android:paddingBottom="@dimen/frame_bottom_padding"
-            android:paddingEnd="15dip"
+            android:paddingEnd="@dimen/frame_right_padding"
             android:paddingStart="@dimen/frame_left_padding"
             android:paddingTop="@dimen/frame_top_padding">
 
@@ -623,66 +794,95 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/info_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="11dip"
-                android:layout_toLeftOf="@+id/pstatus_img"
-                android:gravity="right"
-                android:text="@string/no_selection"
-                android:textSize="13sp" />
-
-            <TextView
                 android:id="@+id/info_stat1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/info_stat2"
+                android:layout_toRightOf="@+id/hl_status"
                 android:drawableLeft="@drawable/square_me"
-                android:paddingRight="8dip"
+                android:layout_marginLeft="12dip"
                 android:text="@string/info_stat1"
-                android:textSize="13sp"
-                android:visibility="invisible" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/info_stat2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="11dip"
-                android:layout_toLeftOf="@+id/pstatus_img"
+                android:layout_toRightOf="@+id/info_stat1"
+                android:layout_marginLeft="5dip"
                 android:drawableLeft="@drawable/square_them"
                 android:text="@string/info_stat2"
-                android:textSize="13sp"
-                android:visibility="invisible" />
+                android:textSize="13sp" />
 
-            <RelativeLayout
-                android:id="@+id/pstatus_seekbar_bg"
+            <TextView
+                android:id="@+id/info_status"
                 android:layout_width="wrap_content"
-                android:layout_height="38dip"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="68dip"
-                android:background="@drawable/bg_seekbar">
-
-                <SeekBar
-                    android:id="@+id/pstatus_seekbar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:max="10"
-                    android:progress="5"
-                    android:progressTint="@color/colorPrimaryDark"
-                    android:thumb="@drawable/circle_seekbar" />
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/pstatus_img"
-                android:layout_width="@dimen/btn_width"
-                android:layout_height="@dimen/btn_height"
-                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/icon_status5"
-                android:contentDescription="@string/pstatus_desc" />
+                android:text="@string/no_selection"
+                android:textSize="13sp" />
+
+            <ToggleButton
+                android:id="@+id/btn_status_1"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:background="@drawable/btn_status1"
+                android:contentDescription="@string/btn_status_1"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
+
+            <ToggleButton
+                android:id="@+id/btn_status_2"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_status_1"
+                android:layout_marginLeft="7dip"
+                android:layout_toRightOf="@+id/btn_status_1"
+                android:background="@drawable/btn_status2"
+                android:contentDescription="@string/btn_status_2"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
+
+            <ToggleButton
+                android:id="@+id/btn_status_3"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_status_2"
+                android:layout_marginLeft="7dip"
+                android:layout_toRightOf="@+id/btn_status_2"
+                android:background="@drawable/btn_status3"
+                android:contentDescription="@string/btn_status_3"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
+
+            <ToggleButton
+                android:id="@+id/btn_status_4"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_status_3"
+                android:layout_marginLeft="7dip"
+                android:layout_toRightOf="@+id/btn_status_3"
+                android:background="@drawable/btn_status4"
+                android:contentDescription="@string/btn_status_4"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
+
+            <ToggleButton
+                android:id="@+id/btn_status_5"
+                style="@style/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_status_4"
+                android:layout_marginLeft="7dip"
+                android:layout_toRightOf="@+id/btn_status_4"
+                android:background="@drawable/btn_status5"
+                android:contentDescription="@string/btn_status_5"
+                android:minHeight="@dimen/btn_height"
+                android:minWidth="@dimen/btn_width" />
 
         </RelativeLayout>
 

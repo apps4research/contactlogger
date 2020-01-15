@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Tina Keil (apps4research) & Miriam Koschate-Reis.
+ * All rights reserved.
+ *
+ * Licensed under the BSD 3-Clause License (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ *
+ * https://opensource.org/licenses/BSD-3-Clause
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.ac.exeter.contactlogger.utils;
 
 import android.content.ContentValues;
@@ -8,22 +23,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-/**
- * Created by apps4research on 2015-11-12.
- */
 public class DBAdapter {
 
     // Database
     private static final String TAG = "DBAdapter";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "contact_logger.sqlite";
-    private static final String TABLE_NAME = "contacts";
+    private static final String TABLE_NAME1 = "contacts";
+    private static final String TABLE_NAME2 = "items";
 
-    // Table Columns names
+    // Table Column names for contacts
     private static final String KEY_ID = "id";
     private static final String KEY_PHONE_ID = "phone_id";
     private static final String KEY_CON_TIME = "date_time";
@@ -37,18 +46,20 @@ public class DBAdapter {
     private static final String KEY_CON_EXP = "experience";
     private static final String KEY_CON_GEN = "gender";
     private static final String KEY_CON_AGE = "age";
-    private static final String KEY_CON_ATT = "attitude";
     private static final String KEY_LOC_LAT = "latitude";
     private static final String KEY_LOC_LNG = "longitude";
     private static final String KEY_LOC_ACC = "accuracy";
     private static final String KEY_CORR_LOC_LAT = "corr_lat";
     private static final String KEY_CORR_LOC_LNG = "corr_lon";
-    private static final String KEY_IOLUX = "io_lux";
-    private static final String KEY_IOMAG = "io_mag";
 
-    // Create Table
-    private static final String DATABASE_CREATE =
-            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+    // Table column names for items
+    private static final String KEY_ITEM1 = "item1";
+    private static final String KEY_ITEM2 = "item2";
+    private static final String KEY_ITEM3 = "item3";
+
+    // Create Table contacts
+    private static final String CREATE_TABLE1 =
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME1 + "("
                     + KEY_ID + " INTEGER PRIMARY KEY,"
                     + KEY_PHONE_ID + " TEXT,"
                     + KEY_CON_TIME + " TEXT,"
@@ -62,22 +73,27 @@ public class DBAdapter {
                     + KEY_CON_EXP + " INTEGER,"
                     + KEY_CON_GEN + " INTEGER,"
                     + KEY_CON_AGE + " INTEGER,"
-                    + KEY_CON_ATT + " INTEGER,"
                     + KEY_LOC_LAT + " DOUBLE,"
                     + KEY_LOC_LNG + " DOUBLE,"
                     + KEY_LOC_ACC + " FLOAT,"
                     + KEY_CORR_LOC_LAT + " DOUBLE,"
-                    + KEY_CORR_LOC_LNG + " DOUBLE,"
-                    + KEY_IOLUX + " DOUBLE,"
-                    + KEY_IOMAG + " DOUBLE"
+                    + KEY_CORR_LOC_LNG + " DOUBLE"
                     + ")";
 
-    private final Context context;
+    private static final String CREATE_TABLE2 =
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME2 + "("
+                    + KEY_ID + " INTEGER PRIMARY KEY,"
+                    + KEY_PHONE_ID + " TEXT,"
+                    + KEY_CON_TIME + " TEXT,"
+                    + KEY_ITEM1 + " INTEGER,"
+                    + KEY_ITEM2 + " INTEGER,"
+                    + KEY_ITEM3 + " INTEGER"
+                    + ")";
+
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
 
-    public DBAdapter(Context ctx) {
-        this.context = ctx;
+    public DBAdapter(Context context) {
         DBHelper = new DatabaseHelper(context);
     }
 
@@ -89,7 +105,8 @@ public class DBAdapter {
         @Override
         public void onCreate(SQLiteDatabase db) {
             try {
-                db.execSQL(DATABASE_CREATE);
+                db.execSQL(CREATE_TABLE1);
+                db.execSQL(CREATE_TABLE2);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -100,7 +117,8 @@ public class DBAdapter {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME1);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME2);
             onCreate(db);
         }
     }
@@ -119,9 +137,8 @@ public class DBAdapter {
     // Add new contact
     public long insertContact(String phoneid, String datetime, int type, String type_other,
                               int relation, String rel_other, int typical, int duration, int status,
-                              int experience, int gender, int age, int attitude, double lat,
-                              double lng, float accuracy, double corr_lat, double corr_lng,
-                              int iolux, int iomag) {
+                              int experience, int gender, int age, double lat, double lng,
+                              float accuracy, double corr_lat, double corr_lng) {
         ContentValues values = new ContentValues();
         values.put(KEY_PHONE_ID, phoneid); // Phone id
         values.put(KEY_CON_TIME, datetime); // Datetime
@@ -135,17 +152,27 @@ public class DBAdapter {
         values.put(KEY_CON_EXP, experience); // Experience
         values.put(KEY_CON_GEN, gender); // Gender
         values.put(KEY_CON_AGE, age); // Age
-        values.put(KEY_CON_ATT, attitude); // Attiutde
         values.put(KEY_LOC_LAT, lat); // Location - Latitude
         values.put(KEY_LOC_LNG, lng); // Location - Longitude
         values.put(KEY_LOC_ACC, accuracy); // Location - Accuracy
         values.put(KEY_CORR_LOC_LAT, corr_lat); // Location - Corrected Latitude
         values.put(KEY_CORR_LOC_LNG, corr_lng); // Location - Corrected Longitude
-        values.put(KEY_IOLUX, iolux); // Lux
-        values.put(KEY_IOMAG, iomag); // Magnetic
 
         // Insert new row
-        return db.insert(TABLE_NAME, null, values);
+        return db.insert(TABLE_NAME1, null, values);
+    }
+
+    // Add new items
+    public long insertItems(String phoneid, String datetime, int item1, int item2, int item3) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_PHONE_ID, phoneid); // Phone id
+        values.put(KEY_CON_TIME, datetime); // Datetime
+        values.put(KEY_ITEM1, item1); // Item1
+        values.put(KEY_ITEM2, item2); // Item2
+        values.put(KEY_ITEM3, item3); // Item3
+
+        // Insert new row
+        return db.insert(TABLE_NAME2, null, values);
     }
 
     // updates location of contact
@@ -153,13 +180,13 @@ public class DBAdapter {
         ContentValues values = new ContentValues();
         values.put(KEY_CORR_LOC_LAT, corrlat); // Location - Corrected Latitude
         values.put(KEY_CORR_LOC_LNG, corrlng); // Location - Corrected Longitude
-        return db.update(TABLE_NAME, values, KEY_ID + "=" + rowId, null) > 0;
+        return db.update(TABLE_NAME1, values, KEY_ID + "=" + rowId, null) > 0;
     }
 
     // Get log count
     public int getDBCount() {
         int count = 0;
-        String countQuery = "SELECT id FROM " + TABLE_NAME;
+        String countQuery = "SELECT id FROM " + TABLE_NAME1;
         Cursor cursor = db.rawQuery(countQuery, null);
         if (cursor != null && !cursor.isClosed()) {
             count = cursor.getCount();
@@ -172,7 +199,7 @@ public class DBAdapter {
     public int getDailyCount(String today) {
         int count = 0;
         //count number of contacts today
-        String countQuery = "SELECT id FROM " + TABLE_NAME + " WHERE " + KEY_CON_TIME + " like '" + today + "%'";
+        String countQuery = "SELECT id FROM " + TABLE_NAME1 + " WHERE " + KEY_CON_TIME + " like '" + today + "%'";
         Cursor cursor = db.rawQuery(countQuery, null);
         if (cursor != null && !cursor.isClosed()) {
             count = cursor.getCount();

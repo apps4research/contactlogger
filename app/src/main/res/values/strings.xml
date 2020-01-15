@@ -3,7 +3,7 @@
     <!-- Main Activity -->
     <string name="app_name">Contact Logger</string>
 
-    <string name="lb_contacttype">Setting / Type</string>
+    <string name="lb_contacttype">Setting / Situation</string>
     <string name="lb_duration">Approx. Duration</string>
     <string name="lb_relationship">Relationship</string>
     <string name="lb_genage">Gender / Age</string>
@@ -12,58 +12,93 @@
     <string name="lb_typical">Group Typicality</string>
     <string name="lb_age">approx. Age</string>
     <string name="lb_gender">Gender</string>
+    <string name="lb_item1">Reliable</string>
+    <string name="lb_item2">Skilled</string>
+    <string name="lb_item3">Friendly</string>
 
     <string name="btn_type_1">Shopping</string>
-    <string name="btn_type_2">Home</string>
-    <string name="btn_type_3">Eating / Drinking</string>
-    <string name="btn_type_4">Leisure</string>
-    <string name="btn_type_5">Work</string>
-    <string name="btn_type_6">Travel</string>
-    <string name="btn_type_7">Place of Worship</string>
+    <string name="btn_type_2">Home (yours)</string>
+    <string name="btn_type_3">Food &amp; Drink Outlet</string>
+    <string name="btn_type_4">Leisure activity</string>
+    <string name="btn_type_5">Workplace / Uni</string>
+    <string name="btn_type_6">Commute / Travel</string>
+    <string name="btn_type_7">Place of worship</string>
     <string name="btn_type_8">Online / Phone</string>
     <string name="btn_type_9">Other</string>
 
     <string name="btn_relate_1">Friend</string>
     <string name="btn_relate_2">Acquaintance</string>
     <string name="btn_relate_3">Colleague</string>
-    <string name="btn_relate_4">Stranger</string>
-    <string name="btn_relate_5">Service Clerk</string>
-    <string name="btn_relate_6">Neighbour</string>
-    <string name="btn_relate_7">Partner / Spouse</string>
-    <string name="btn_relate_8">Relative</string>
-    <string name="btn_relate_9">Other</string>
+    <string name="btn_relate_4">Customer / Client</string>
+    <string name="btn_relate_5">Stranger</string>
+    <string name="btn_relate_6">Service clerk</string>
+    <string name="btn_relate_7">Neighbour</string>
+    <string name="btn_relate_8">Partner / Spouse</string>
+    <string name="btn_relate_9">Relative</string>
+    <string name="btn_relate_10">Other</string>
 
-    <string name="btn_exp_1">Very Negative</string>
+    <string name="btn_exp_1">Very negative</string>
     <string name="btn_exp_2">Negative</string>
     <string name="btn_exp_3">Neutral</string>
     <string name="btn_exp_4">Positive</string>
-    <string name="btn_exp_5">Very Positive</string>
+    <string name="btn_exp_5">Very positive</string>
+
+    <string name="btn_typical_1">Not at all typical</string>
+    <string name="btn_typical_2">Slightly typical</string>
+    <string name="btn_typical_3">Somewhat typical</string>
+    <string name="btn_typical_4">Moderately typical</string>
+    <string name="btn_typical_5">Very typical</string>
 
     <string name="btn_male">Male</string>
     <string name="btn_female">Female</string>
-    <string name="btn_genother">Other Gender</string>
+    <string name="btn_genother">Other gender</string>
 
-    <string name="pstatus_desc">Relative Status</string>
     <string name="info_stat1">&#160;Me</string>
     <string name="info_stat2">&#160;Them</string>
+    <string name="btn_status_1">Much lower</string>
+    <string name="btn_status_2">Lower</string>
+    <string name="btn_status_3">Equal</string>
+    <string name="btn_status_4">Higher</string>
+    <string name="btn_status_5">Much higher</string>
+
+    <string name="btn_likert_1">Not at all</string>
+    <string name="btn_likert_2">Slightly</string>
+    <string name="btn_likert_3">Somewhat</string>
+    <string name="btn_likert_4">Moderately</string>
+    <string name="btn_likert_5">Very much</string>
+
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="double_zero">00</string>
 
     <string name="btn_log_contact">Log Contact</string>
+    <string name="btn_next_contact">Next Contact</string>
     <string name="btn_continue">Continue</string>
-    <string name="log_insert_ok">Contact successfully logged</string>
-    <string name="log_insert_failed">Contact logging FAILED!</string>
+    <string name="contact_insert_ok">Contact logged successfully!</string>
+    <string name="contact_insert_failed">Contact could not be saved. Please contact the researcher!</string>
+    <string name="log_insert_ok">Contact and location\nlogged successfully!</string>
+    <string name="log_insert_failed">Location could not be saved. Please contact the researcher!</string>
+    <string name="item_insert_ok">Daily activity logged\nsuccessfully!</string>
+    <string name="item_insert_failed">Daily activity could not\nbe saved. Please contact\nthe researcher!</string>
+    <string name="thanks">Thank you!</string>
+    <string name="sorry">Ups, something went wrong!</string>
+    <string name="hurray">Hurray!</string>
+    <string name="ohoh">Oh, Oh!</string>
 
     <!-- Actions -->
     <string name="action_admin">Administration</string>
     <string name="action_alarm">Alarm / Reminder</string>
     <string name="action_daily">Daily Activity</string>
-    <string name="action_loc_settings">Location Services</string>
+    <string name="action_loc_settings">Location services</string>
     <string name="action_about">About / FAQ</string>
     <string name="action_close">Close</string>
+    <string name="action_exit_app">Exit App</string>
 
     <!-- Administration Activity -->
     <string name="title_admin">Administration</string>
     <string name="admin_hl">Database</string>
-    <string name="prefs_hl">Shared Prefs</string>
+    <string name="prefs_hl">Shared prefs</string>
     <string name="photos_hl">Contact Photos</string>
     <string name="phoneid_hl">Phone / Participant ID</string>
     <string name="photos_dirsize">Photos / directory size:</string>
@@ -78,15 +113,19 @@
     <string name="delete_fail">Deletion FAILED!</string>
     <string name="default_mapurl">REPLACE WITH URL OF MBTILES FILE</string>
     <string name="logout">Logout</string>
-    <string name="dwl_title">Offline Map Download</string>
+    <string name="dwl_title">Offline map download</string>
     <string name="dwl_desc">Map is being downloaded …</string>
+    <string name="dwl_url">Download URL</string>
     <string name="map_importing">Importing map …</string>
+    <string name="map_found">found&#160;</string>
     <string name="end_import">Finished import!</string>
     <string name="end_export">Finished export!</string>
     <string name="downloading_map">Downloading map …</string>
     <string name="task_hl">Task Progress</string>
     <string name="task_msg">Task message:</string>
-    <string name="map_hl">Offline map</string>
+    <string name="offline_map">Offline map</string>
+    <string name="map_hl">Import remote offline map</string>
+    <string name="map_local_hl">Import local offline map</string>
     <string name="map_status_hl">Map status:</string>
     <string name="map_exists">Map already exist!</string>
     <string name="map_url_error">Error, enter a Map URL!</string>
@@ -95,10 +134,12 @@
     <string name="no_off_map">No offline map on device!</string>
     <string name="off_map_deleted">Offline map deleted!</string>
     <string name="map_nodwl_yet">Map not downloaded yet!</string>
+    <string name="map_not_found">No mbtiles file found!</string>
     <string name="zip_backup">Zip/Backup</string>
     <string name="zipped_ok">Photo backup successful</string>
     <string name="zipped_failed">Photo backup failed!</string>
     <string name="saved_userid">User ID saved successfully</string>
+    <string name="userid">User or Phone ID</string>
 
     <!-- Login form -->
     <string name="password">Password</string>
@@ -131,9 +172,9 @@
     <string name="getting_location">Getting best location.</string>
     <string name="dialog_novalue_title">Missing Response…</string>
     <string name="dialog_novalues_title">Missing Responses…</string>
-    <string name="dialog_thermo_text">You have not changed the value of the thermometer. Accepting the default value is equal to a response of 50 degrees.</string>
     <string name="dialog_missing_plu">Responses to the following items are missing.\n\n</string>
     <string name="dialog_missing_sin">A response to the following item is missing.\n\n</string>
+    <string name="album_name">ContactLogger</string>
     <string name="title_photolist">Contact Photos</string>
     <string name="action_camera">Take a new photo</string>
     <string name="photo_deleted">Photo successfully deleted</string>
@@ -145,6 +186,8 @@
     <string name="alarm_message">Set a time and/or interval when you would like to be reminded.</string>
     <string name="admin_photos_deleted">&#160;photo(s) deleted</string>
     <string name="admin_nothing_deleted">&#160;No photos to delete!</string>
+    <string name="remote_status">Service status</string>
+    <string name="remote_start_hour">9</string>
 
     <!-- generic strings -->
     <string name="attention">Attention!</string>
@@ -152,18 +195,16 @@
     <string name="no">No</string>
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
-    <string name="accept_default">Accept\nDefault</string>
-    <string name="decline_response">Decline\nResponse</string>
-    <string name="change_value">Change\nValue</string>
     <string name="change">Change</string>
     <string name="decline_all">Decline all</string>
     <string name="delete_all">Delete all</string>
     <string name="decline_one">Decline</string>
-    <string name="no_selection">No Selection</string>
-    <string name="of100">/100</string>
+    <string name="no_selection">No selection</string>
     <string name="save">Save</string>
     <string name="slash">&#160;/&#160;</string>
     <string name="percent">%</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
 
     <!-- Alarm string -->
     <string name="hour_hint"><![CDATA[<small>hour</small>]]></string>
@@ -171,21 +212,21 @@
     <string name="alarm_start">Daily alarm\nstart time</string>
     <string name="alarm_stop">Daily alarm\nstop time</string>
     <string name="alarm_int">Repeat\ninterval</string>
+    <string name="alarm_int_hours">Repeat interval hours</string>
+    <string name="alarm_int_mins">Repeat interval minutes</string>
     <string name="alarm_active">Activate alarm?</string>
     <string name="alarm_ticker">Remember to log your contacts!</string>
     <string name="alarm_title">Contact Reminder</string>
     <string name="alarm_reminder">Don\'t forget to log your contacts!</string>
 
     <!-- custom map tiles for mapbox.com -->
-    <string name="mapbox_id">REPLACE WITH OWN MAPBOX ID</string> <!-- normal map -->
-    <string name="mapbox_token">REPLACE WITH OWN MAPBOX TOKEN</string>
     <string name="mapbox_url1">http://api.tiles.mapbox.com/v4/</string>
     <string name="mapbox_url2">/{z}/{x}/{y}@2x.png256?access_token=</string>
     <string name="osm_url">http://a.tile.openstreetmap.org/{z}/{x}/{y}.png</string>
 
     <!-- Daily question -->
-    <string name="dailyInfoText">Please indicate your overall attitude towards older people today. A favourable attitude represents a score between 50° and 100°, an unfavourable attitude between 0° and 50°.</string>
-    <string name="imgDailyDesc">Thermometer</string>
+    <string name="dailyInfoText">To what extent do you feel that <b>older</b> people are …</string>
+    <string name="dailyInfoHeading">Question</string>
 
     <!-- Database and sharedprefs -->
     <string name="PREFS_NAME">contact_logger_prefs</string>
@@ -198,9 +239,10 @@
     <string name="about_credits_hl">4. Credits</string>
     <string name="about_copyright_hl">5. Copyright</string>
     <string name="about_project"><![CDATA[This software was programmed and developed by Tina Keil, as part of a Ph.D. Research project supervised by Dr. Miriam Koschate-Reis and Prof. Mark Levine, Department of Psychology, College of Life and Environmental Sciences, University of Exeter. The project is funded by the University of Exeter (exeter.ac.uk) and the UK Engineering and Physical Sciences Research Council (epsrc.ac.uk).]]></string>
-    <string name="about_faq1"><![CDATA[<b>1. Why is the location map blank?</b><br>Check to you have access to the internet, either via mobile data from the SIM-card provider or WiFi. Alternatively, internet access may be currently slow, or the map provider may have technical problems. Try to select a different type of map, e.g. switch from Hybrid map to Mapbox map, etc. Most likely this problem is only temporary and will resolve itself at a later point. If the problem persists, contact the technical support.]]></string>
-    <string name="about_faq2"><![CDATA[<b>2. What is the alarm/reminder?</b><br>The function allows you to set a daily time, at which the app reminds you to log a contact. A short notification message will appear, a sound will play, and the phone will vibrate. You can also set a repeat interval time.<br>For example if you have set the alarm to start at 14:30 daily, and both the stop and interval time fields are left blank, the alarm will only sound daily at the requested start time. If you set a start time of 14:30 and an end time of 19:30, with an interval time of 1:30, the alarm will start at 14:30, repeat every one and half hours, but not after 19:30. Unless you explicitly turn the alarm off, once set it will remember the setting even after rebooting the phone.]]></string>
-    <string name="about_contact"><![CDATA[If you have any questions regarding this software or research, please contact us.<br><br><b>Department of Psychology</b><br>College of Life &amp; Environmental Sciences<br>Washington Singer Laboratories<br>University of Exeter<br>Perry Road, Exeter EX4 4QG<br>United Kingdom<br>Tel: +44 1392 724626<br>Email: psychology@exeter.ac.uk<br>Technical Support: tk303@exeter.ac.uk]]></string>
-    <string name="about_credits"><![CDATA[This software makes use of the Android-Universal-Image-Loader library, freely available via GitHub and distributed under the Apache 2.0 Licence. The service clerk and stranger icons used in this App were made by Freepik from www.flaticon.com is licensed under CC BY 3.0. Custom map tiles thanks to OpenStreetMap and MapBox. OpenStreeMap tile cartography is licensed under the CC-BY-SA 2.0 License and are copyrighted to OpenStreetMap contributors.]]></string>
-    <string name="about_copyright"><![CDATA[Version: 1.0, Nov. 2015<br>Copyright © 2015, Tina Keil and <nobr>Dr. Miriam Koschate-Reis</nobr>.]]></string>
+    <string name="about_faq1"><![CDATA[<b>1. Why is the location map blank?</b><br>Check to you have access to the internet, either via mobile data from the SIM-card provider or Wi-Fi. Alternatively, internet access may be currently slow, or the map provider may have technical problems. Try to select a different type of map, e.g. switch from Hybrid map to Mapbox map etc. Most likely this problem is only temporary and will resolve itself at a later point. If no internet is available you may also select the offline map, which is stored locally on the mobile phone. If the problem persists, please contact the technical support.]]></string>
+    <string name="about_faq2"><![CDATA[<b>2. What is the alarm/reminder?</b><br>This function allows you to set a daily time, at which the app reminds you to log a contact. A short notification message will appear, a sound will play, and the phone will vibrate. You can also set a repeat interval time.<br>For example, if you have set the alarm to start at 14:30 daily, and both the stop and interval time fields are left blank, the alarm will only sound once a day at the set start time. If you set a start time of 14:30 and an end time of 19:30, with an interval time of 1:30, the alarm will start at 14:30 and repeat every one and half hours, but not after 19:30. Unless you explicitly turn the alarm off, once set, it will remember the setting even after rebooting the phone]]></string>
+    <string name="about_contact"><![CDATA[If you have any questions regarding this application or research, please contact us.<br><br><b>Department of Psychology</b><br>College of Life &amp; Environmental Sciences<br>Washington Singer Laboratories<br>University of Exeter<br>Perry Road, Exeter EX4 4QG<br>United Kingdom<br>Tel: +44 (0)
+    1392 724626<br>Email: psychology@exeter.ac.uk<br>Technical Support: tk303@exeter.ac.uk]]></string>
+    <string name="about_credits"><![CDATA[This software makes use of the Android–Universal–Image–Loader (Copyright 2011–2015,  Sergey Tarasevich) and Calligraphy (Copyright 2013, Christopher Jenkins) libraries, freely available via GitHub and distributed under the Apache 2.0 Licence. The service clerk and stranger icons used in this app were made by Freepik from www.flaticon.com, licensed under CC BY 3.0. Custom map tiles thanks to OpenStreetMap and MapBox. OpenStreeMap tile cartography is licensed under the CC-BY-SA 2.0 License, and is copyrighted to the OpenStreetMap contributors.]]></string>
+    <string name="about_copyright"><![CDATA[Version: 2.0, Jan. 2016<br>Copyright © 2015, Tina Keil and<br>Dr. Miriam Koschate-Reis.]]></string>
 </resources>

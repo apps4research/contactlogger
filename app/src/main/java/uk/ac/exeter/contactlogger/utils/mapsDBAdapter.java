@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Tina Keil (apps4research) & Miriam Koschate-Reis.
+ * All rights reserved.
+ *
+ * Licensed under the BSD 3-Clause License (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ *
+ * https://opensource.org/licenses/BSD-3-Clause
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.ac.exeter.contactlogger.utils;
 
 import android.content.Context;
@@ -9,22 +24,17 @@ import android.util.Log;
 
 import uk.ac.exeter.contactlogger.AdminActivity;
 
-/**
- * Created by apps4research on 2015-11-12.
- */
 public class mapsDBAdapter {
 
     private static final String TAG = mapsDBAdapter.class.getName();
     private static final Integer DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "tiles";
 
-    private static Context ctx;
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
 
     public mapsDBAdapter(Context context) {
-        ctx = context;
-        DBHelper = new DatabaseHelper(ctx);
+        DBHelper = new DatabaseHelper(context);
     }
 
     private class DatabaseHelper extends SQLiteOpenHelper {

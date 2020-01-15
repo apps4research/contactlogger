@@ -1,35 +1,49 @@
+/*
+ * Copyright (C) 2016 Tina Keil (apps4research) & Miriam Koschate-Reis.
+ * All rights reserved.
+ *
+ * Licensed under the BSD 3-Clause License (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ *
+ * https://opensource.org/licenses/BSD-3-Clause
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.ac.exeter.contactlogger;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.FragmentManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.SeekBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -53,10 +67,8 @@ import uk.ac.exeter.contactlogger.dialogs.otherInputType;
 import uk.ac.exeter.contactlogger.utils.DBAdapter;
 import uk.ac.exeter.contactlogger.utils.Utils;
 import uk.ac.exeter.contactlogger.utils.cameraHandler;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-/**
- * Created by apps4research on 2015-11-12.
- */
 public class MainActivity extends Activity implements
         enableLocationAlert.OnLocationDialogResultListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -71,27 +83,29 @@ public class MainActivity extends Activity implements
     private static final long INTERVAL = 1000; //1 seconds
     private static final long FASTEST_INTERVAL = INTERVAL; //1 seconds
     private static final int missing_val = 999;
-    private static final int dailyHour = 16; //after 4pm
+    private static final int dailyHour = 1; //after 1am
     private static final int minAccuracy = 0; //meters
     private static final int maxLocations = 5;
     private static final int maxGetLocationMs = 45000; //45 seconds
 
-    private static TextView info_type, info_rel, info_gen, info_exp, info_duration,
-            info_typical, info_status, info_stat1, info_stat2;
-    private static ImageView pstatus_img, duration_img, typical_img;
-
+    private static TextView info_type, info_rel, info_gen, info_exp, info_typical, info_status;
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
-    private String device_id, otherRel, otherType, prefs_name;
-    private boolean gotLocation = false, val_missing = true, insert_status = false,
-            pstatus_pressed = false, duration_pressed = false, typical_pressed = false;
-    private int count, attitude, dur_listener_val, status_listener_val, typical_listener_val,
-            final_btn_type_val, final_btn_rel_val, final_btn_exp_val, final_btn_gen_val,
-            final_age_val, sl_typical_default, sl_dur_default, sl_status_default,
-            final_typical_val, final_dur_val, final_status_val;
+    private String device_id;
+    private String otherRel;
+    private String otherType;
+    private String time_type;
+    private boolean val_missing = true;
+    private boolean insert_status = false;
+    private int count, final_btn_type_val, final_btn_rel_val, final_btn_exp_val, final_btn_gen_val,
+            final_age_val, final_btn_typical_val, final_dur_val, final_btn_status_val, updown;
     private double lat, lng, conv_lat, conv_lng, best_lat, best_lng;
     private float accuracy, bestAccuracy, best_acc;
     private EditText age_val;
+    private TextView duration_hour, duration_min, duration_sec;
+    private Handler repeatUpdateHandler = new Handler();
+    private final static long REPEAT_DELAY = 0;
+    private boolean mAutoChange, buttonPressed = false;
     private ProgressDialog location_dialog;
     private SharedPreferences settings;
 
@@ -108,7 +122,7 @@ public class MainActivity extends Activity implements
         setContentView(R.layout.main_layout);
 
         //Shared prefs name
-        prefs_name = getResources().getString(R.string.PREFS_NAME);
+        String prefs_name = getResources().getString(R.string.PREFS_NAME);
         settings = getSharedPreferences(prefs_name, 0);
 
         //get device id from shared prefs or from phone
@@ -120,7 +134,7 @@ public class MainActivity extends Activity implements
 
         if (!servicesAvailable()) {
             //check if google location services are installed
-            Toast.makeText(this, "Google Location Serviced unavailable", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Google Location Service unavailable", Toast.LENGTH_SHORT).show();
         }
 
         if (!isLocationGpsEnabled() || (isNetworkAvailable() && !isLocationWifiCellEnabled())) {
@@ -132,28 +146,66 @@ public class MainActivity extends Activity implements
         //check to see if DailyActivity needs to be shown
         showDaily();
 
-        //get thermo_value from DailyActivity
-        attitude = getIntent().getIntExtra("thermo_value", missing_val);
-
         // Initialize and build GoogleApiClient
         buildGoogleApiClient();
 
-        //define and get arrays
-        final String[] dur_img_array = getResources().getStringArray(R.array.duration_images);
-        final String[] dur_txt_array = getResources().getStringArray(R.array.duration_texts);
-        final String[] pstatus_array = getResources().getStringArray(R.array.pstatus_images);
-        final int[] transparency_arr = new int[]{0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 255};
-
-        //Textviews
+        //Text views
         info_type = (TextView) findViewById(R.id.info_type);
         info_rel = (TextView) findViewById(R.id.info_rel);
         info_gen = (TextView) findViewById(R.id.info_gen);
         info_exp = (TextView) findViewById(R.id.info_exp);
-        info_duration = (TextView) findViewById(R.id.info_duration);
         info_typical = (TextView) findViewById(R.id.info_typical);
         info_status = (TextView) findViewById(R.id.info_status);
-        info_stat1 = (TextView) findViewById(R.id.info_stat1);
-        info_stat2 = (TextView) findViewById(R.id.info_stat2);
+
+        //Duration Text views
+        duration_hour = (TextView) findViewById(R.id.duration_hour);
+        duration_min = (TextView) findViewById(R.id.duration_min);
+        duration_sec = (TextView) findViewById(R.id.duration_sec);
+
+        //Set initial Text view values
+        duration_hour.setText(getString(R.string.double_zero));
+        duration_min.setText(getString(R.string.double_zero));
+        duration_sec.setText(getString(R.string.double_zero));
+
+        //Duration Buttons
+        Button hour_plus = (Button) findViewById(R.id.hour_plus);
+        Button hour_minus = (Button) findViewById(R.id.hour_minus);
+        Button min_plus = (Button) findViewById(R.id.min_plus);
+        Button min_minus = (Button) findViewById(R.id.min_minus);
+        Button sec_plus = (Button) findViewById(R.id.sec_plus);
+        Button sec_minus = (Button) findViewById(R.id.sec_minus);
+
+        RelativeLayout box_hour = (RelativeLayout) findViewById(R.id.box_hour);
+        RelativeLayout box_min = (RelativeLayout) findViewById(R.id.box_min);
+        RelativeLayout box_sec = (RelativeLayout) findViewById(R.id.box_sec);
+
+        //Duration onClick listeners
+        hour_plus.setOnClickListener(onclick_listener);
+        hour_minus.setOnClickListener(onclick_listener);
+        min_plus.setOnClickListener(onclick_listener);
+        min_minus.setOnClickListener(onclick_listener);
+        sec_plus.setOnClickListener(onclick_listener);
+        sec_minus.setOnClickListener(onclick_listener);
+
+        box_hour.setOnClickListener(onclick_listener);
+        box_min.setOnClickListener(onclick_listener);
+        box_sec.setOnClickListener(onclick_listener);
+
+        //Duration onLongClick listener
+        hour_plus.setOnLongClickListener(onlongclick_listener);
+        hour_minus.setOnLongClickListener(onlongclick_listener);
+        min_plus.setOnLongClickListener(onlongclick_listener);
+        min_minus.setOnLongClickListener(onlongclick_listener);
+        sec_plus.setOnLongClickListener(onlongclick_listener);
+        sec_minus.setOnLongClickListener(onlongclick_listener);
+
+        //Duration onTouch listener
+        hour_plus.setOnTouchListener(touch_listener);
+        hour_minus.setOnTouchListener(touch_listener);
+        min_plus.setOnTouchListener(touch_listener);
+        min_minus.setOnTouchListener(touch_listener);
+        sec_plus.setOnTouchListener(touch_listener);
+        sec_minus.setOnTouchListener(touch_listener);
 
         //Edit Text
         age_val = (EditText) findViewById(R.id.age_input);
@@ -161,26 +213,11 @@ public class MainActivity extends Activity implements
         //set initial value of section descriptions
         if (final_btn_type_val == 0) info_type.setText(getString(R.string.no_selection));
         if (final_btn_rel_val == 0) info_rel.setText(getString(R.string.no_selection));
+        if (final_btn_typical_val == 0) info_typical.setText(getString(R.string.no_selection));
+        if (final_btn_status_val == 0) info_status.setText(getString(R.string.no_selection));
         if (final_btn_exp_val == 0) info_exp.setText(getString(R.string.no_selection));
         if (final_btn_gen_val == 0) info_gen.setText(getString(R.string.no_selection));
-        if (!typical_pressed) info_typical.setText(getString(R.string.no_selection));
-        if (!duration_pressed) info_duration.setText(getString(R.string.no_selection));
-        if (!pstatus_pressed) info_status.setText(getString(R.string.no_selection));
 
-        //Set defaults for typicality seekbar
-        SeekBar typical_seekbar = (SeekBar) findViewById(R.id.typical_seekbar);
-        typical_img = (ImageView) findViewById(R.id.typical_img);
-        sl_typical_default = typical_seekbar.getProgress(); //default 5
-
-        //Set default for approx. duration seekbar
-        SeekBar duration_seekbar = (SeekBar) findViewById(R.id.dur_seekbar);
-        duration_img = (ImageView) findViewById(R.id.dur_img);
-        sl_dur_default = duration_seekbar.getProgress(); //default 1 minute
-
-        //Set default for relative status seekbar
-        SeekBar pstatus_seekbar = (SeekBar) findViewById(R.id.pstatus_seekbar);
-        pstatus_img = (ImageView) findViewById(R.id.pstatus_img);
-        sl_status_default = pstatus_seekbar.getProgress(); //default 5
 
         //fill and iterate through ButtonMap Array
         LinkedButtonMap();
@@ -190,133 +227,11 @@ public class MainActivity extends Activity implements
             ToggleButton toggleButton = (ToggleButton) findViewById(id); //find view of each button
             toggleButton.setOnClickListener(this); //set listener for each button
         }
+    }
 
-        //onClick listeners for slider images
-        typical_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Drawable status_drawable = getResources().getDrawable(R.drawable.icon_typical, getTheme());
-                SeekBar typical_seekbar = (SeekBar) findViewById(R.id.typical_seekbar);
-                typical_seekbar.setProgress(sl_typical_default); //5
-                typical_img.setImageDrawable(status_drawable);
-                info_typical.setText(getString(R.string.no_selection));
-                typical_pressed = false;
-            }
-        });
-
-        duration_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //set duration seekbar to no response
-                Drawable status_drawable = getResources().getDrawable(R.drawable.icon_duration12, getTheme());
-                SeekBar duration_seekbar = (SeekBar) findViewById(R.id.dur_seekbar);
-                duration_seekbar.setProgress(sl_dur_default); //default 50 seconds
-                duration_img.setImageDrawable(status_drawable);
-                info_duration.setText(getString(R.string.no_selection));
-                duration_pressed = false;
-            }
-        });
-
-        pstatus_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Drawable status_drawable = getResources().getDrawable(R.drawable.icon_status5, getTheme());
-                SeekBar status_seekbar = (SeekBar) findViewById(R.id.pstatus_seekbar);
-                status_seekbar.setProgress(sl_status_default); //5
-                pstatus_img.setImageDrawable(status_drawable);
-                info_status.setVisibility(View.VISIBLE);
-                info_stat1.setVisibility(View.GONE);
-                info_stat2.setVisibility(View.GONE);
-                pstatus_pressed = false;
-            }
-        });
-
-
-        //onchange listeners for sliders
-        typical_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar typical_seekbar, int progress, boolean fromUser) {
-                Drawable group_drawable = getResources().getDrawable(R.drawable.icon_typical, getTheme());
-                Drawable typical_drawable = getResources().getDrawable(R.drawable.typical_person, getTheme());
-                if (typical_drawable != null) typical_drawable.setAlpha(transparency_arr[progress]);
-                typical_img.setBackground(group_drawable);
-                typical_img.setImageDrawable(typical_drawable);
-                info_typical.setText(String.valueOf(progress * 10) + getString(R.string.of100));
-                typical_listener_val = progress;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar typical_seekbar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar typical_seekbar) {
-                //make the icon for this slide bar grey when user stops touching seekbar
-                Drawable group_drawable = getResources().getDrawable(R.drawable.icon_typical, getTheme());
-                Drawable typical_drawable = getResources().getDrawable(R.drawable.typical_person, getTheme());
-                if (typical_drawable != null)
-                    typical_drawable.setAlpha(transparency_arr[typical_listener_val]);
-                Drawable final_group_drawable = convertToGrayscale(group_drawable);
-                typical_img.setBackground(final_group_drawable);
-                Drawable final_typical_drawable = convertToGrayscale(typical_drawable);
-                typical_img.setImageDrawable(final_typical_drawable);
-                typical_pressed = true;
-            }
-
-        });
-
-        duration_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar pstatus_seekbar, int progress, boolean fromUser) {
-                //set duration clock image and duration text
-                int dur_img = getResources().getIdentifier(dur_img_array[progress], "drawable", getPackageName());
-                Drawable dur_drawable = getResources().getDrawable(dur_img, getTheme());
-                duration_img.setImageDrawable(dur_drawable);
-                info_duration.setText(dur_txt_array[progress]);
-                dur_listener_val = progress;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar duration_seekbar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar duration_seekbar) {
-                //make the icon for this slide bar grey when user stops touching seekbar
-                int dur_img = getResources().getIdentifier(dur_img_array[dur_listener_val], "drawable", getPackageName());
-                Drawable final_dur_drawable = convertToGrayscale(getResources().getDrawable(dur_img, getTheme()));
-                duration_img.setImageDrawable(final_dur_drawable);
-                duration_pressed = true;
-            }
-
-        });
-
-        pstatus_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar pstatus_seekbar, int progress, boolean fromUser) {
-                int status_img = getResources().getIdentifier(pstatus_array[progress], "drawable", getPackageName());
-                Drawable status_drawable = getResources().getDrawable(status_img, getTheme());
-                pstatus_img.setImageDrawable(status_drawable);
-                info_status.setVisibility(View.GONE);
-                info_stat1.setVisibility(View.VISIBLE);
-                info_stat2.setVisibility(View.VISIBLE);
-                status_listener_val = progress;
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar pstatus_seekbar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar pstatus_seekbar) {
-                //make the icon for this slide bar grey when user stops touching seekbar
-                int status_img = getResources().getIdentifier(pstatus_array[status_listener_val], "drawable", getPackageName());
-                Drawable final_status_drawable = convertToGrayscale(getResources().getDrawable(status_img, getTheme()));
-                pstatus_img.setImageDrawable(final_status_drawable);
-                pstatus_pressed = true;
-            }
-
-        });
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void LinkedButtonMap() {
@@ -330,12 +245,166 @@ public class MainActivity extends Activity implements
         }
     }
 
-    protected Drawable convertToGrayscale(Drawable drawable) {
-        ColorMatrix matrix = new ColorMatrix();
-        matrix.setSaturation(0);
-        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
-        drawable.setColorFilter(filter);
-        return drawable;
+    //onclick listener for duration
+    View.OnClickListener onclick_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.hour_plus:
+                    updown = 1;
+                    time_type="hour";
+                    break;
+                case R.id.min_plus:
+                    updown = 1;
+                    time_type="min";
+                    break;
+                case R.id.sec_plus:
+                    updown = 1;
+                    time_type="sec";
+                    break;
+                case R.id.hour_minus:
+                    updown = 0;
+                    time_type="hour";
+                    break;
+                case R.id.min_minus:
+                    updown = 0;
+                    time_type="min";
+                    break;
+                case R.id.sec_minus:
+                    updown = 0;
+                    time_type="sec";
+                    break;
+                case R.id.box_hour:
+                    updown = 2;
+                    time_type="hour";
+                    break;
+                case R.id.box_min:
+                    updown = 2;
+                    time_type="min";
+                    break;
+                case R.id.box_sec:
+                    updown = 2;
+                    time_type="sec";
+                    break;
+            }
+            mAutoChange = false;
+            repeatUpdateHandler.post(new duration_updater());
+        }
+    };
+
+    //onlongclick listener for duration
+    View.OnLongClickListener onlongclick_listener = new View.OnLongClickListener() {
+        public boolean onLongClick(View v) {
+            switch (v.getId()) {
+                case R.id.hour_plus:
+                    updown = 1;
+                    time_type="hour";
+                    break;
+                case R.id.min_plus:
+                    updown = 1;
+                    time_type="min";
+                    break;
+                case R.id.sec_plus:
+                    updown = 1;
+                    time_type="sec";
+                    break;
+                case R.id.hour_minus:
+                    updown = 0;
+                    time_type="hour";
+                    break;
+                case R.id.min_minus:
+                    updown = 0;
+                    time_type="min";
+                    break;
+                case R.id.sec_minus:
+                    updown = 0;
+                    time_type="sec";
+                    break;
+            }
+            mAutoChange = true;
+            repeatUpdateHandler.post(new duration_updater());
+            return true;
+        }
+    };
+
+    //count duration text view up and down
+    private void change_progress(int updown, String time_type) {
+        int lower_limit = 0;
+        int currentValue = 0;
+        int upper_limit = 59;
+
+        switch (time_type) {
+            case "hour":
+                upper_limit = 23;
+                currentValue = Integer.parseInt(duration_hour.getText().toString());
+                break;
+            case "min":
+                currentValue = Integer.parseInt(duration_min.getText().toString());
+                break;
+            case "sec":
+                currentValue = Integer.parseInt(duration_sec.getText().toString());
+                break;
+        }
+
+        if (updown == 1 && currentValue < upper_limit) { //up
+            currentValue++;
+        } else if (updown == 0 && currentValue > lower_limit) { //down
+            currentValue--;
+        } else if (updown == 2 && time_type.equals("hour")) {
+            duration_hour.setText(getString(R.string.double_zero));
+            duration_hour.setTextColor(0xFF616161);
+            time_type = "nothing";
+        } else if (updown == 2 && time_type.equals("min")) {
+            duration_min.setText(getString(R.string.double_zero));
+            duration_min.setTextColor(0xFF616161);
+            time_type = "nothing";
+        } else if (updown == 2 && time_type.equals("sec")) {
+            duration_sec.setText(getString(R.string.double_zero));
+            duration_sec.setTextColor(0xFF616161);
+            time_type = "nothing";
+        }
+
+        switch (time_type) {
+            case "hour":
+                if (currentValue > 0) duration_hour.setTextColor(0xFF000000);
+                duration_hour.setText(String.valueOf(String.format("%02d", currentValue)));
+                break;
+            case "min":
+                if (currentValue > 0) duration_min.setTextColor(0xFF000000);
+                duration_min.setText(String.valueOf(String.format("%02d", currentValue)));
+                break;
+            case "sec":
+                if (currentValue > 0) duration_sec.setTextColor(0xFF000000);
+                duration_sec.setText(String.valueOf(String.format("%02d", currentValue)));
+                break;
+        }
+
+        //calculation total duration in seconds
+        int final_dur_hour = Integer.parseInt(duration_hour.getText().toString())*60*60;
+        int final_dur_min = Integer.parseInt(duration_min.getText().toString())*60;
+        int final_dur_sec = Integer.parseInt(duration_sec.getText().toString());
+        final_dur_val = final_dur_hour + final_dur_min + final_dur_sec;
+    }
+
+    // if finger is taken off duration button OR
+    // event is cancelled auto update of duration is stopped!
+    View.OnTouchListener touch_listener = new View.OnTouchListener() {
+        public boolean onTouch(View v, MotionEvent event) {
+            if ((event.getAction() == MotionEvent.ACTION_UP ||
+                    event.getAction() == MotionEvent.ACTION_CANCEL) && mAutoChange) {
+                mAutoChange = false;
+            }
+            return false;
+        }
+    };
+
+    class duration_updater implements Runnable {
+        public void run() {
+            change_progress(updown, time_type); //0 down, 1 up
+            //if mAutoChange is true continuously do something
+            if (mAutoChange) {
+                repeatUpdateHandler.postDelayed(new duration_updater(), REPEAT_DELAY);
+            }
+        }
     }
 
     public void onClick(View v) {
@@ -353,6 +422,12 @@ public class MainActivity extends Activity implements
                 if (category.equals("rel") && !toggleButton.isChecked()) {
                     info_rel.setText(getString(R.string.no_selection));
                     final_btn_rel_val = 0;
+                } else if (category.equals("typical") && !toggleButton.isChecked()) {
+                    info_typical.setText(getString(R.string.no_selection));
+                    final_btn_typical_val = 0;
+                } else if (category.equals("status") && !toggleButton.isChecked()) {
+                    info_status.setText(getString(R.string.no_selection));
+                    final_btn_status_val = 0;
                 } else if (category.equals("exp") && !toggleButton.isChecked()) {
                     info_exp.setText(getString(R.string.no_selection));
                     final_btn_exp_val = 0;
@@ -369,6 +444,12 @@ public class MainActivity extends Activity implements
                 if (category.equals("rel") && toggleButton.isChecked()) {
                     info_rel.setText(description);
                     final_btn_rel_val = Integer.parseInt(ButtonKeyMap.get(id));
+                } else if (category.equals("typical") && toggleButton.isChecked()) {
+                    info_typical.setText(description);
+                    final_btn_typical_val = Integer.parseInt(ButtonKeyMap.get(id));
+                } else if (category.equals("status") && toggleButton.isChecked()) {
+                    info_status.setText(description);
+                    final_btn_status_val = Integer.parseInt(ButtonKeyMap.get(id));
                 } else if (category.equals("exp") && toggleButton.isChecked()) {
                     info_exp.setText(description);
                     final_btn_exp_val = Integer.parseInt(ButtonKeyMap.get(id));
@@ -383,14 +464,14 @@ public class MainActivity extends Activity implements
                 //show dialog if "other" buttons are pressed
                 if (id == R.id.btn_type_9 && toggleButton.isChecked()) {
                     showOtherType();
-                } else if (id == R.id.btn_relate_9 && toggleButton.isChecked()) {
+                } else if (id == R.id.btn_relate_10 && toggleButton.isChecked()) {
                     showOtherRel();
                 }
 
                 //set other values to null if other button is unchecked
                 if (id == R.id.btn_type_9 && !toggleButton.isChecked()) {
                     otherType = null;
-                } else if (id == R.id.btn_relate_9 && !toggleButton.isChecked()) {
+                } else if (id == R.id.btn_relate_10 && !toggleButton.isChecked()) {
                     otherRel = null;
                 }
 
@@ -467,7 +548,7 @@ public class MainActivity extends Activity implements
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         //get admin login status
-        Boolean admin_login = settings.getBoolean("admin_login", false);
+        boolean admin_login = settings.getBoolean("admin_login", false);
         //if not logged in as admin, do not show Daily Activity option in menu
         menu.findItem(R.id.action_daily).setVisible(admin_login);
         return true;
@@ -551,6 +632,7 @@ public class MainActivity extends Activity implements
     public void onLocationChanged(Location location) {
         Location mCurrentLocation = location;
 
+        boolean gotLocation;
         if (null != mCurrentLocation && mCurrentLocation.getLatitude() != 0) {
             //got a fused location back
             gotLocation = true;
@@ -618,7 +700,7 @@ public class MainActivity extends Activity implements
 
                     //if location was NOT accurate enough go to MapActivity
                     if ((bestAccuracy < minAccuracy) && bestAccuracy != 0) {
-                        //accuracy is good enough, dont show map
+                        //accuracy is good enough, don't show map
                         destination = "main";
                     } else {
                         destination = "map";
@@ -686,7 +768,7 @@ public class MainActivity extends Activity implements
 
     // On a failure to connect Google API client, this method will be called.
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "Connection failed: " + connectionResult.toString());
     }
 
@@ -734,12 +816,13 @@ public class MainActivity extends Activity implements
         if (result == Activity.RESULT_OK) { // DECLINE RESPONSE
             if (final_btn_type_val == 0) final_btn_type_val = missing_val;
             if (final_btn_rel_val == 0) final_btn_rel_val = missing_val;
+            if (final_btn_typical_val == 0) final_btn_typical_val = missing_val;
+            if (final_btn_status_val == 0) final_btn_status_val = missing_val;
             if (final_btn_exp_val == 0) final_btn_exp_val = missing_val;
             if (final_btn_gen_val == 0) final_btn_gen_val = missing_val;
             if (final_age_val == 0) final_age_val = missing_val;
-            if (!duration_pressed) final_dur_val = missing_val;
-            if (!pstatus_pressed) final_status_val = missing_val;
-            if (!typical_pressed) final_typical_val = missing_val;
+            if (final_dur_val == 0) final_dur_val = missing_val;
+
             if (!validateResponses()) {
                 //no missing values, so go get location
                 locationProgress();
@@ -768,7 +851,6 @@ public class MainActivity extends Activity implements
             }
         }
 
-
         //check if a button in the type section was not pressed
         if (!buttons_checked_cat.contains("type") && (final_btn_type_val != missing_val)) {
             //button in section not checked and final value not set to decline
@@ -778,11 +860,6 @@ public class MainActivity extends Activity implements
 
         if (!buttons_checked_cat.contains("rel") && (final_btn_rel_val != missing_val)) {
             error_message.append("- ").append(getString(R.string.lb_relationship)).append("\n");
-            count_errors++;
-        }
-
-        if (!buttons_checked_cat.contains("exp") && (final_btn_exp_val != missing_val)) {
-            error_message.append("- ").append(getString(R.string.lb_experience)).append("\n");
             count_errors++;
         }
 
@@ -796,27 +873,24 @@ public class MainActivity extends Activity implements
             count_errors++;
         }
 
-        if (!typical_pressed && final_typical_val != missing_val) {
-            //if slider has not been moved and final value not set to decline
-            error_message.append("- ").append(getString(R.string.lb_typical)).append("\n");
-            count_errors++;
-        } else if (typical_pressed && final_typical_val != missing_val) {
-            //this can only happen if the slider has been moved
-            final_typical_val = typical_listener_val;
-        }
-
-        if (!duration_pressed && final_dur_val != missing_val) {
+        if (final_dur_val < 1 && final_dur_val != missing_val) {
             error_message.append("- ").append(getString(R.string.lb_duration)).append("\n");
             count_errors++;
-        } else if (duration_pressed && final_dur_val != missing_val) {
-            final_dur_val = dur_listener_val;
         }
 
-        if (!pstatus_pressed && final_status_val != missing_val) {
+        if (!buttons_checked_cat.contains("typical") && (final_btn_typical_val != missing_val)) {
+            error_message.append("- ").append(getString(R.string.lb_typical)).append("\n");
+            count_errors++;
+        }
+
+        if (!buttons_checked_cat.contains("status") && (final_btn_status_val != missing_val)) {
             error_message.append("- ").append(getString(R.string.lb_pstatus)).append("\n");
             count_errors++;
-        } else if (pstatus_pressed && final_status_val != missing_val) {
-            final_status_val = status_listener_val;
+        }
+
+        if (!buttons_checked_cat.contains("exp") && (final_btn_exp_val != missing_val)) {
+            error_message.append("- ").append(getString(R.string.lb_experience)).append("\n");
+            count_errors++;
         }
 
         //if a value of any buttons is missing, then show an alert dialog
@@ -878,13 +952,15 @@ public class MainActivity extends Activity implements
     }
 
     private boolean servicesAvailable() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (ConnectionResult.SUCCESS == resultCode) {
-            return true;
-        } else {
-            GooglePlayServicesUtil.getErrorDialog(resultCode, this, 0).show();
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int resultCode = googleAPI.isGooglePlayServicesAvailable(this);
+        if(resultCode != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(resultCode)) {
+                googleAPI.getErrorDialog(this, resultCode, 0).show();
+            }
             return false;
         }
+        return true;
     }
 
     //Check if GPS is enabled
@@ -916,8 +992,8 @@ public class MainActivity extends Activity implements
         //is equal to or later than dailyHour
         if (!DateUtils.isToday(daily_last_shown) && hour_now >= dailyHour) {
             Intent showDailyActivity = new Intent(this, DailyActivity.class);
-            startActivity(showDailyActivity);
             finish();
+            startActivity(showDailyActivity);
         }
     }
 
@@ -939,17 +1015,15 @@ public class MainActivity extends Activity implements
         DBAdapter db = new DBAdapter(this);
         db.open();
         long row_id = db.insertContact(device_id, DateTime, final_btn_type_val, otherType,
-                final_btn_rel_val, otherRel, final_typical_val, final_dur_val, final_status_val,
-                final_btn_exp_val, final_btn_gen_val, final_age_val, attitude, best_lat, best_lng,
-                best_acc, 0, 0, 0, 0);
+                final_btn_rel_val, otherRel, final_btn_typical_val, final_dur_val, final_btn_status_val,
+                final_btn_exp_val, final_btn_gen_val, final_age_val, best_lat, best_lng, best_acc, 0, 0);
 
         if (row_id > 0) {
-            Toast.makeText(MainActivity.this, getString(R.string.log_insert_ok), Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this, getString(R.string.contact_insert_ok), Toast.LENGTH_LONG).show();
             insert_status = true;
         } else {
-            Toast.makeText(this, getString(R.string.log_insert_failed), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.contact_insert_failed), Toast.LENGTH_LONG).show();
         }
-
         db.close();
 
         if (dest.equals("main") && insert_status) {
@@ -961,7 +1035,7 @@ public class MainActivity extends Activity implements
 
     private void goToMap(double best_lat, double best_lng, float best_acc, long row_id) {
         //got to MapActivity
-        Intent showMap = new Intent(MainActivity.this, MapActivity.class);
+        Intent showMap = new Intent(this, MapActivity.class);
         showMap.putExtra("row_id", row_id);
         showMap.putExtra("lat", best_lat);
         showMap.putExtra("lng", best_lng);

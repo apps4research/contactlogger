@@ -1,6 +1,5 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-
     <dimen name="btn_width">57dip</dimen>
     <dimen name="btn_height">57dip</dimen>
     <dimen name="btn_generic_height">38dip</dimen>
@@ -8,7 +7,7 @@
     <dimen name="icon_width">32dip</dimen>
     <dimen name="icon_height">32dip</dimen>
 
-    <dimen name="btn_corner">3dip</dimen>
+    <dimen name="btn_corner">5dip</dimen>
     <dimen name="bg_areas_corner">7dip</dimen>
     <dimen name="btn_generic_corner">7dip</dimen>
 

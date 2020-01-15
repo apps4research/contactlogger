@@ -2,5 +2,5 @@
     <!-- button background toggle -->
     <item android:drawable="@drawable/bg_exp" />
     <!-- button icon -->
-    <item android:drawable="@drawable/toggle_smile" />
+    <item android:drawable="@drawable/toggle_smiley4" />
 </layer-list>

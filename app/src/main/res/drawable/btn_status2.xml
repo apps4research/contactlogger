@@ -1,0 +1,6 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- button background -->
+    <item android:drawable="@drawable/bg_status" />
+    <!-- person that changes size -->
+    <item android:drawable="@drawable/toggle_status2" />
+</layer-list>

@@ -4,7 +4,6 @@
     <!-- Primary Material Color Scheme -->
     <color name="colorPrimary">#9E9E9E</color> <!-- grey 500 -->
     <color name="colorPrimaryDark">#616161</color> <!-- grey 700 -->
-    <!-- blue 600 -->
     <!-- 87% of black / Text color -->
     <color name="textColorPrimary">#212121</color> <!-- grey 900 -->
     <color name="textColor">#616161</color> <!-- grey 600 -->
@@ -20,7 +19,6 @@
     <color name="red100">#FFCDD2</color> <!-- red 100 -->
 
     <color name="bg_areas_shadow">#757575</color> <!-- grey 600 -->
-    <!-- grey 300 -->
 
     <color name="app_bg_end">#BDBDBD</color> <!-- grey 4616100 -->
     <color name="app_bg_start">#E0E0E0</color> <!-- grey 300 -->
@@ -42,30 +40,43 @@
     <!-- gender / age -->
     <color name="btn_bg_genage_off">#E1BEE7</color> <!-- purple 100 -->
     <color name="btn_icon_genage_off">#AB47BC</color> <!-- purple 400 -->
-    <color name="btn_edit_text">#70ffffff</color> <!-- 70% white -->
+    <color name="btn_edit_text">#80FFFFFF</color> <!-- 50% white -->
 
     <!-- type / setting colors -->
     <color name="btn_bg_type_off">#C8E6C9</color> <!-- green 100 -->
     <color name="btn_icon_type_off">#43A047</color> <!-- green 600 -->
 
     <!-- typicality colors -->
-    <color name="bg_typical_icon">#D7CCC8</color> <!-- brown 100 -->
-    <color name="icon_typical">#6D4C41</color> <!-- brown 600 -->
+    <color name="btn_bg_typical_off">#D7CCC8</color> <!-- brown 100 -->
+    <color name="btn_icon_typical_off">#6D4C41</color> <!-- brown 600 -->
+
+    <color name="icon_typical_person1_off">#006D4C41</color> <!-- 0% brown 100 -->
+    <color name="icon_typical_person2_off">#406D4C41</color> <!-- 25% brown 600 -->
+    <color name="icon_typical_person3_off">#806D4C41</color> <!-- 50% brown 600 -->
+    <color name="icon_typical_person4_off">#BF6D4C41</color> <!-- 75% brown 600 -->
+    <color name="icon_typical_person5_off">#6D4C41</color> <!-- 100% brown 600 -->
+
+    <color name="icon_typical_person1_on">#00757575</color> <!-- 0% gray 100 -->
+    <color name="icon_typical_person2_on">#40757575</color> <!-- 25% gray 600 -->
+    <color name="icon_typical_person3_on">#80757575</color> <!-- 50% gray 600 -->
+    <color name="icon_typical_person4_on">#BF757575</color> <!-- 75% gray 600 -->
+    <color name="icon_typical_person5_on">#757575</color> <!-- 100% gray 600 -->
+
+    <!-- Likert Scale colours -->
+    <color name="btn_bg_item1_off">#D1C4E9</color> <!-- deep purple 100 -->
+    <color name="btn_icon_item1_off">#5E35B1</color> <!-- deep purple 600 -->
+    <color name="btn_bg_item2_off">#C5CAE9</color> <!-- indigo 100 -->
+    <color name="btn_icon_item2_off">#3949AB</color> <!-- indigo 600 -->
+    <color name="btn_bg_item3_off">#BBDEFB</color> <!-- blue 100 -->
+    <color name="btn_icon_item3_off">#1E88E5</color> <!-- blue 600 -->
 
     <!-- status colors -->
-    <color name="bg_status_icon">#CFD8DC</color> <!-- blue grey 100 -->
+    <color name="btn_bg_status_off">#B0BEC5</color> <!-- blue grey 200 -->
     <color name="icon_status_me">#546E7A</color> <!-- blue grey 600 -->
-    <color name="bg_seekbar">#EEEEEE</color> <!-- grey 200 -->
 
     <!-- duration colors -->
-    <color name="bg_clock_face">#50FFFFFF</color><!-- 50% white -->
-    <color name="bg_duration_icon">#FFCCBC</color> <!-- deep orange 100 -->
-    <color name="clock_ticks">#FF8A65</color> <!-- deep orange 300 -->
-    <color name="elapsed_time">#65F4511E</color><!-- 65 % of deep orange 600 -->
-    <color name="bg_duration_clock">#F4511E</color> <!-- deep orange 600 -->
-    <color name="bg_seekbar_dur1">#BDBDBD</color> <!-- grey 400 -->
-    <color name="bg_seekbar_dur2">#E0E0E0</color> <!-- grey 300 -->
-    <color name="bg_seekbar_dur3">#EEEEEE</color> <!-- grey 200 -->
+    <color name="btn_bg_duration">#FFC7A4</color> <!-- light orange -->
+    <color name="btn_icon_duration">#FF6300</color> <!-- full orange -->
 
     <!-- generic button colors -->
     <color name="btn_pressed">#9E9E9E</color> <!-- grey 500 -->

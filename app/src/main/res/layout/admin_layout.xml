@@ -46,6 +46,7 @@
                     android:layout_marginEnd="10dip"
                     android:layout_toLeftOf="@+id/btn_save_user"
                     android:digits="0123456789abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ-_()"
+                    android:hint="@string/userid"
                     android:inputType="textNoSuggestions"
                     android:maxLength="50"
                     android:singleLine="true"
@@ -311,6 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/map_status_hl"
                     android:layout_centerVertical="true"
+                    android:hint="@string/dwl_url"
                     android:inputType="textUri"
                     android:singleLine="true"
                     android:text="@string/default_mapurl"
@@ -374,6 +376,96 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/Frame4"
+            android:layout_marginEnd="@dimen/frame_right_margin"
+            android:layout_marginStart="@dimen/frame_left_margin"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/bg_areas"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="10dip">
+
+            <RelativeLayout
+                android:id="@+id/mapwrapper2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_on"
+                android:padding="5dip">
+
+                <TextView
+                    android:id="@+id/map_local_hl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dip"
+                    android:text="@string/map_local_hl"
+                    android:textAllCaps="true"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/map_local_status_hl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/map_local_hl"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/map_status_hl" />
+
+                <TextView
+                    android:id="@+id/map_local_status_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/map_local_hl"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="5dip"
+                    android:layout_toRightOf="@+id/map_local_status_hl" />
+
+                <LinearLayout
+                    android:id="@+id/map_local_btn_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/map_local_status_hl"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/import_local_map"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dip"
+                        android:layout_marginTop="10dip"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_admin_selector"
+                        android:enabled="false"
+                        android:minHeight="@dimen/btn_generic_height"
+                        android:onClick="importLocalMap"
+                        android:singleLine="true"
+                        android:text="@string/btn_import"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/del_local_map"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dip"
+                        android:layout_marginTop="10dip"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_admin_selector"
+                        android:enabled="false"
+                        android:minHeight="@dimen/btn_generic_height"
+                        android:onClick="deleteMapDB"
+                        android:singleLine="true"
+                        android:text="@string/btn_delete"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Frame6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Frame5"
             android:layout_marginEnd="@dimen/frame_right_margin"
             android:layout_marginStart="@dimen/frame_left_margin"
             android:layout_marginTop="10dip"

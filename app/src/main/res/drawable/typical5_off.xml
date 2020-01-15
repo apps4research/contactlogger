@@ -1,0 +1,10 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- button background -->
+    <item
+        android:id="@+id/bg_typical"
+        android:drawable="@drawable/bg_typical" />
+    <!-- group in background -->
+    <item android:drawable="@drawable/typical_group_off" />
+    <!-- individual infront -->
+    <item android:drawable="@drawable/typical_person5_off" />
+</layer-list>

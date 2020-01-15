@@ -1,74 +1,4 @@
 <resources>
-    <string-array name="pstatus_images">
-        <item value="0">icon_status0</item>
-        <item value="1">icon_status1</item>
-        <item value="2">icon_status2</item>
-        <item value="3">icon_status3</item>
-        <item value="4">icon_status4</item>
-        <item value="5">icon_status5</item>
-        <item value="6">icon_status6</item>
-        <item value="7">icon_status7</item>
-        <item value="8">icon_status8</item>
-        <item value="9">icon_status9</item>
-        <item value="10">icon_status10</item>
-    </string-array>
-
-    <string-array name="duration_images">
-        <item value="0">icon_duration0</item> <!-- 5 seconds -->
-        <item value="1">icon_duration1</item> <!-- 10 seconds -->
-        <item value="2">icon_duration2</item> <!-- 20 seconds-->
-        <item value="3">icon_duration3</item> <!-- 30 seconds -->
-        <item value="4">icon_duration4</item> <!-- 40 seconds -->
-        <item value="5">icon_duration5</item> <!-- 50 seconds -->
-        <item value="6">icon_duration6</item> <!-- 60 seconds -->
-        <item value="7">icon_duration7</item> <!-- 5 minutes -->
-        <item value="8">icon_duration8</item> <!-- 10 minutes -->
-        <item value="9">icon_duration9</item> <!-- 20 minutes -->
-        <item value="10">icon_duration10</item> <!-- 30 minutes -->
-        <item value="11">icon_duration11</item> <!-- 40 minutes -->
-        <item value="12">icon_duration12</item> <!-- 50 minutes -->
-        <item value="13">icon_duration13</item> <!-- 1 hour -->
-        <item value="14">icon_duration14</item> <!-- 2 hours -->
-        <item value="15">icon_duration15</item> <!-- 3 hours -->
-        <item value="16">icon_duration16</item> <!-- 4 hours -->
-        <item value="17">icon_duration17</item> <!-- 5 hours -->
-        <item value="18">icon_duration18</item> <!-- 6 hours -->
-        <item value="19">icon_duration19</item> <!-- 7 hours -->
-        <item value="20">icon_duration20</item> <!-- 8 hours -->
-        <item value="21">icon_duration21</item> <!-- 9 hours -->
-        <item value="22">icon_duration22</item> <!-- 10 hours -->
-        <item value="23">icon_duration23</item> <!-- 11 hours -->
-        <item value="24">icon_duration24</item> <!-- 12 hours -->
-    </string-array>
-    
-    <string-array name="duration_texts">
-        <item value="0">5 Seconds</item>
-        <item value="1">10 Seconds</item>
-        <item value="2">20 Seconds</item>
-        <item value="3">30 Seconds</item>
-        <item value="4">40 Seconds</item>
-        <item value="5">50 Seconds</item>
-        <item value="6">60 Seconds</item>
-        <item value="7">5 Minutes</item>
-        <item value="8">10 Minutes</item>
-        <item value="9">20 Minutes</item>
-        <item value="10">30 Minutes</item>
-        <item value="11">40 Minutes</item>
-        <item value="12">50 Minutes</item>
-        <item value="13">1 Hour</item>
-        <item value="14">2 Hours</item>
-        <item value="15">3 Hours</item>
-        <item value="16">4 Hours</item>
-        <item value="17">5 Hours</item>
-        <item value="18">6 Hours</item>
-        <item value="19">7 Hours</item>
-        <item value="20">8 Hours</item>
-        <item value="21">9 Hours</item>
-        <item value="22">10 Hours</item>
-        <item value="23">11 Hours</item>
-        <item value="24">12 Hours</item>
-    </string-array>
-
     <string-array name="ButtonDescMap">
         <!-- Id // Group -->
         <item>btn_type_1|type</item>
@@ -90,6 +20,19 @@
         <item>btn_relate_7|rel</item>
         <item>btn_relate_8|rel</item>
         <item>btn_relate_9|rel</item>
+        <item>btn_relate_10|rel</item>
+        <!-- Typicality -->
+        <item>btn_typical_1|typical</item>
+        <item>btn_typical_2|typical</item>
+        <item>btn_typical_3|typical</item>
+        <item>btn_typical_4|typical</item>
+        <item>btn_typical_5|typical</item>
+        <!-- Perceived status -->
+        <item>btn_status_1|status</item>
+        <item>btn_status_2|status</item>
+        <item>btn_status_3|status</item>
+        <item>btn_status_4|status</item>
+        <item>btn_status_5|status</item>
         <!-- Experience -->
         <item>btn_exp_1|exp</item>
         <item>btn_exp_2|exp</item>
@@ -100,5 +43,27 @@
         <item>btn_gen_1|gen</item>
         <item>btn_gen_2|gen</item>
         <item>btn_gen_3|gen</item>
+    </string-array>
+
+    <string-array name="ButtonDescMap_Items">
+        <!-- Id // Group -->
+        <!-- Item 1 -->
+        <item>btn_item1_1|item1</item>
+        <item>btn_item1_2|item1</item>
+        <item>btn_item1_3|item1</item>
+        <item>btn_item1_4|item1</item>
+        <item>btn_item1_5|item1</item>
+        <!-- Item 2 -->
+        <item>btn_item2_1|item2</item>
+        <item>btn_item2_2|item2</item>
+        <item>btn_item2_3|item2</item>
+        <item>btn_item2_4|item2</item>
+        <item>btn_item2_5|item2</item>
+        <!-- Item 3 -->
+        <item>btn_item3_1|item3</item>
+        <item>btn_item3_2|item3</item>
+        <item>btn_item3_3|item3</item>
+        <item>btn_item3_4|item3</item>
+        <item>btn_item3_5|item3</item>
     </string-array>
 </resources>

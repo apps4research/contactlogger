@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="google_api_key">REPLACE WITH OWN KEY</string>
+    <string name="mapbox_id">REPLACE WITH OWN ID</string>
+    <string name="mapbox_token">REPLACE WITH OWN TOKEN</string>
+    <string name="admin_pwd">REPLACE WITH OWN PASSWORD</string>
+</resources>

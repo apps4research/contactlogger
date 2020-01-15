@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_loc_settings"
+        android:title="@string/action_loc_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_admin"
+        android:title="@string/action_admin"
+        app:showAsAction="never" />
+
+</menu>

@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Tina Keil (apps4research) & Miriam Koschate-Reis.
+ * All rights reserved.
+ *
+ * Licensed under the BSD 3-Clause License (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ *
+ * https://opensource.org/licenses/BSD-3-Clause
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.ac.exeter.contactlogger;
 
 import android.app.Activity;
@@ -13,25 +28,19 @@ import java.util.ArrayList;
 import uk.ac.exeter.contactlogger.utils.Utils;
 import uk.ac.exeter.contactlogger.utils.fullscreenImageAdapter;
 
-/**
- * Created by apps4research on 2015-11-12.
- */
 public class PhotoDetailsActivity extends Activity{
-
-    private fullscreenImageAdapter adapter;
-    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photodetails_view);
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
         Intent i = getIntent();
         int position = i.getIntExtra("position", 0);
 
-        adapter = new fullscreenImageAdapter(PhotoDetailsActivity.this,
+        fullscreenImageAdapter adapter = new fullscreenImageAdapter(PhotoDetailsActivity.this,
                 (ArrayList<String>) Utils.ReadSDCard());
 
         viewPager.setAdapter(adapter);
@@ -69,12 +78,13 @@ public class PhotoDetailsActivity extends Activity{
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
-    private final Handler mHideHandler = new Handler() {
+    private final Handler mHideHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
+        public boolean handleMessage(Message msg) {
             hideSystemUI();
+            return false;
         }
-    };
+    });
 
     private void delayedHide(int delayMillis) {
         mHideHandler.removeMessages(0);

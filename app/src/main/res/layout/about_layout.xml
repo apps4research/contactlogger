@@ -8,7 +8,7 @@
         android:id="@+id/about_img"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="About"
+        android:contentDescription="@string/action_about"
         android:src="@drawable/about_xhdpi"
         android:adjustViewBounds="true"/>
 

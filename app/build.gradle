@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 23
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "uk.ac.exeter.contactlogger"
         minSdkVersion 21
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 23
+        versionCode 2
+        versionName "2.0"
     }
     buildTypes {
         release {
@@ -20,9 +20,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.gms:play-services-location:10.2.1'
-    compile 'com.google.android.gms:play-services-maps:10.2.1'
-    compile 'com.mcxiaoke.volley:library:1.0.19'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.android.gms:play-services-location:10.2.1'
+    implementation 'com.google.android.gms:play-services-maps:10.2.1'
+    implementation 'com.mcxiaoke.volley:library:1.0.19'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
 }

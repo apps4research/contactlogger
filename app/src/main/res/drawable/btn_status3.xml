@@ -1,0 +1,6 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- button background -->
+    <item android:drawable="@drawable/bg_status" />
+    <!-- button icon -->
+    <item android:drawable="@drawable/toggle_status3" />
+</layer-list>

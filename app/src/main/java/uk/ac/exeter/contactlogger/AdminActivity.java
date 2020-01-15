@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2016 Tina Keil (apps4research) & Miriam Koschate-Reis.
+ * All rights reserved.
+ *
+ * Licensed under the BSD 3-Clause License (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ *
+ * https://opensource.org/licenses/BSD-3-Clause
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.ac.exeter.contactlogger;
 
 import android.app.Activity;
@@ -40,9 +55,6 @@ import uk.ac.exeter.contactlogger.utils.DBAdapter;
 import uk.ac.exeter.contactlogger.utils.Utils;
 import uk.ac.exeter.contactlogger.utils.compressHandler;
 
-/**
- * Created by apps4research on 2015-11-12.
- */
 public class AdminActivity extends Activity {
 
     private static final String TAG = AdminActivity.class.getName();
@@ -51,12 +63,13 @@ public class AdminActivity extends Activity {
     private static final Integer green = 0xFF00897B;
     private static final Integer red = 0xFFFF0000;
 
-    private String prefs_name, device_id, slash_char = "";
-    private TextView task_msg, map_status_msg;
-    private Button btn_delete;
-    private Button btn_import;
+    private String device_id, mapfilename;
+    private String slash_char = "";
+    private TextView task_msg, map_status_msg, map_local_status_msg;
+    private Button btn_delete, btn_local_delete, btn_import, btn_local_import;
     private ProgressBar mProgressBar;
-    private int dl_progress, len;
+    private int dl_progress, len, import_type;
+    private int count = 0;
     private long total = 0;
     private File importDir, dbFile, dbExportFile, mapImportFile, mapExportFile;
     private Object[] photo_array;
@@ -68,7 +81,7 @@ public class AdminActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        prefs_name = getResources().getString(R.string.PREFS_NAME);
+        String prefs_name = getResources().getString(R.string.PREFS_NAME);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_layout);
@@ -108,29 +121,56 @@ public class AdminActivity extends Activity {
 
         mProgressBar = (ProgressBar) findViewById(R.id.dwl_progress);
 
-        //number of database and sharepref entries
+        //number of database and shared preferences entries
         final TextView num_entries = (TextView) findViewById(R.id.num_entries);
         final TextView num_pref_entries = (TextView) findViewById(R.id.num_pref_entries);
         task_msg = (TextView) findViewById(R.id.task_msg);
         map_status_msg = (TextView) findViewById(R.id.map_status_msg);
+        map_local_status_msg = (TextView) findViewById(R.id.map_local_status_msg);
         num_entries.setText(String.valueOf(num_contacts));
         num_pref_entries.setText(String.valueOf(num_prefs));
 
         btn_import = (Button) findViewById(R.id.import_map);
         btn_delete = (Button) findViewById(R.id.del_map);
+        btn_local_import = (Button) findViewById(R.id.import_local_map);
+        btn_local_delete = (Button) findViewById(R.id.del_local_map);
 
         //check to see if mbtiles has already been downloaded
         if (mapImportFile.exists()) {
             btn_import.setEnabled(true);
         }
 
+        //check to see if there is an mbfiles file in the
+        // import folder for local import
+        for (File file : importDir.listFiles()) {
+            if (file.isFile()) {
+                if (file.getName().endsWith(".mbtiles")) {
+                    count++;
+                    mapfilename = file.getName();
+                }
+            }
+            if (count == 1) {
+                // file is available for import, but hasn't been imported yet
+                btn_local_import.setEnabled(true);
+                map_local_status_msg.setTextColor(green);
+                map_local_status_msg.setText(getString(R.string.map_found) + mapfilename);
+            } else {
+                // no map to import found, and no map imported yet
+                map_local_status_msg.setTextColor(red);
+                map_local_status_msg.setText(getString(R.string.map_not_found));
+            }
+        }
+
         //check to see if we already have an imported map db
         if (mapExportFile.exists()) {
             btn_delete.setEnabled(true);
+            btn_local_delete.setEnabled(true);
             map_status_msg.setTextColor(green);
             map_status_msg.setText(getString(R.string.map_exists));
+            map_local_status_msg.setTextColor(green);
+            map_local_status_msg.setText(getString(R.string.map_exists));
         } else if (mapImportFile.exists() && !mapExportFile.exists()) {
-            // file is available for import, but hasnt been imported yet
+            // file is available for import, but hasn't been imported yet
             map_status_msg.setTextColor(red);
             map_status_msg.setText(getString(R.string.map_import_ready));
         } else {
@@ -156,8 +196,9 @@ public class AdminActivity extends Activity {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean("admin_login", false).apply();
 
-                //retrun to main activity
+                //return to main activity
                 Intent launchMainActivity = new Intent(this, MainActivity.class);
+                this.finish();
                 startActivity(launchMainActivity);
                 return true;
         }
@@ -172,6 +213,15 @@ public class AdminActivity extends Activity {
 
     public void importMap(View view) {
         if (mapImportFile.exists()) {
+            import_type = 0; //remote
+            new importMBTiles().execute();
+        }
+    }
+
+    public void importLocalMap(View view) {
+        if (!mapfilename.isEmpty()) {
+            import_type = 1; //local
+            mapImportFile = new File(importDir, mapfilename);
             new importMBTiles().execute();
         }
     }
@@ -180,11 +230,14 @@ public class AdminActivity extends Activity {
         if (mapExportFile.exists()) {
             boolean del_status = mapExportFile.delete();
             if (del_status) {
-                task_msg.setTextColor(green);
+                task_msg.setTextColor(red);
                 task_msg.setText(getString(R.string.off_map_deleted));
                 map_status_msg.setTextColor(red);
                 map_status_msg.setText(getString(R.string.no_off_map));
+                map_local_status_msg.setTextColor(red);
+                map_local_status_msg.setText(getString(R.string.map_not_found));
                 btn_delete.setEnabled(false);
+                btn_local_delete.setEnabled(false);
             } else {
                 task_msg.setTextColor(red);
                 task_msg.setText(getString(R.string.del_map_error));
@@ -303,8 +356,13 @@ public class AdminActivity extends Activity {
 
         protected void onPreExecute() {
             mProgressBar.setProgress(0);
-            map_status_msg.setTextColor(green);
-            map_status_msg.setText(getString(R.string.map_importing));
+            if (import_type == 0) {
+                map_status_msg.setTextColor(green);
+                map_status_msg.setText(getString(R.string.map_importing));
+            } else {
+                map_local_status_msg.setTextColor(green);
+                map_local_status_msg.setText(getString(R.string.map_importing));
+            }
             super.onPreExecute();
         }
 
@@ -348,12 +406,18 @@ public class AdminActivity extends Activity {
                 if (mapImportFile.exists()) {
                     mapImportFile.delete();
                     btn_import.setEnabled(false);
+                    btn_local_import.setEnabled(false);
                 }
 
-                //set delete button to enabled
-                btn_delete.setEnabled(true);
-                map_status_msg.setTextColor(green);
-                map_status_msg.setText(getString(R.string.map_exists));
+                if (import_type == 0) {
+                    btn_delete.setEnabled(true);
+                    map_status_msg.setTextColor(green);
+                    map_status_msg.setText(getString(R.string.map_exists));
+                } else {
+                    btn_local_delete.setEnabled(true);
+                    map_local_status_msg.setTextColor(green);
+                    map_local_status_msg.setText(getString(R.string.map_exists));
+                }
             }
         }
     }

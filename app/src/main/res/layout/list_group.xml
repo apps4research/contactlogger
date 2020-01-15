@@ -7,6 +7,7 @@
         android:layout_height="wrap_content"
         android:background="@color/list_group"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:paddingRight="2dip"
         android:textColor="@color/colorPrimaryDark"
         android:paddingTop="12dip"
         android:textStyle="bold"
