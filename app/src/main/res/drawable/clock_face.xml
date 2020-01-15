@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dip"
+    android:height="32dip"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+
+    <path
+        android:fillColor="@color/bg_clock_face"
+        android:pathData="M28.093 16.205c0 6.659-5.398 12.056-12.056 12.056s-12.056-5.398-12.056-12.056c0-6.659 5.398-12.056 12.056-12.056s12.056 5.398 12.056 12.056z" />
+    <path
+        android:fillColor="@color/clock_ticks"
+        android:pathData="M16.55 26.485h-0.991v-3.345h0.991z" />
+    <path
+        android:fillColor="@color/clock_ticks"
+        android:pathData="M5.756 16.718v-0.991h3.345v0.991z" />
+    <path
+        android:fillColor="@color/clock_ticks"
+        android:pathData="M15.523 5.924h0.991v3.345h-0.991z" />
+    <path
+        android:fillColor="@color/clock_ticks"
+        android:pathData="M26.317 15.691v0.991h-3.345v-0.991z" />
+    <path
+        android:fillColor="@color/bg_duration_clock"
+        android:pathData="M17.336 16.205c0 0 0 0 0 0 0 0.718-0.582 1.299-1.299 1.299 0 0 0 0 0 0s0 0 0 0c-0.718 0-1.299-0.582-1.299-1.299 0 0 0 0 0 0s0 0 0 0c0-0.718 0.582-1.299 1.299-1.299 0 0 0 0 0 0s0 0 0 0c0.718 0 1.299 0.582 1.299 1.299 0 0 0 0 0 0z" />
+    <path
+        android:fillColor="@color/bg_duration_clock"
+        android:pathData="M16.037 3.785c-6.854 0-12.419 5.565-12.419 12.419s5.565 12.419 12.419 12.419c6.854 0 12.419-5.565 12.419-12.419s-5.565-12.419-12.419-12.419zM16.037 4.629c6.398 0 11.575 5.178 11.575 11.575s-5.177 11.575-11.575 11.575c-6.398 0-11.575-5.177-11.575-11.575s5.177-11.575 11.575-11.575z" />
+</vector>

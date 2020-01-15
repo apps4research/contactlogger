@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/frame_left_margin"
+    android:layout_marginEnd="@dimen/frame_right_margin"
+    android:layout_marginStart="@dimen/frame_right_margin"
+    android:layout_marginTop="@dimen/frame_left_margin">
+
+    <TextView
+        android:id="@+id/dailyInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dailyInfoText"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:id="@+id/thermo_wrap"
+        android:paddingTop="32dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dailyInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true">
+
+        <RelativeLayout
+            android:id="@+id/bg_wrap1"
+            android:layout_width="91dp"
+            android:layout_height="341dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/thermo_bg1">
+
+            <ImageView
+                android:id="@+id/thermometer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/imgDailyDesc"
+                android:src="@drawable/thermo_inner" />
+
+            <uk.ac.exeter.contactlogger.utils.verticalProgressBar
+                android:id="@+id/thermoProgressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dip"
+                android:max="100"
+                android:maxWidth="23dip"
+                android:minHeight="221dip"
+                android:minWidth="23dip"
+                android:progress="50"
+                android:progressDrawable="@drawable/progress_thermo" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/bg_wrap2"
+            android:layout_width="38dp"
+            android:layout_height="341dp"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/bg_wrap1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/thermo_bg2" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dip"
+        android:paddingBottom="26dip"
+        android:layout_toRightOf="@+id/thermo_wrap">
+
+        <Button
+            android:id="@+id/btn_plus"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="55dip"
+            android:layout_height="55dip"
+            android:background="@drawable/btn_plus"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_minus"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="55dip"
+            android:layout_height="55dip"
+            android:layout_below="@+id/btn_plus"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/btn_minus"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!-- Continue button -->
+    <Button
+        android:id="@+id/btn_continue"
+        style="@style/ButtonText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dip"
+        android:background="@drawable/btn_log_contact"
+        android:minHeight="@dimen/btn_generic_height"
+        android:onClick="gotoNextActivity"
+        android:text="@string/btn_continue" />
+
+</RelativeLayout>

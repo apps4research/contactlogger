@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Primary Material Color Scheme -->
+    <color name="colorPrimary">#9E9E9E</color> <!-- grey 500 -->
+    <color name="colorPrimaryDark">#616161</color> <!-- grey 700 -->
+    <!-- blue 600 -->
+    <!-- 87% of black / Text color -->
+    <color name="textColorPrimary">#212121</color> <!-- grey 900 -->
+    <color name="textColor">#616161</color> <!-- grey 600 -->
+
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="red">#ffff0000</color>
+    <color name="green600">#43A047</color> <!-- green 600 -->
+    <color name="green400">#66BB6A</color> <!-- green 400 -->
+    <color name="green100">#C8E6C9</color> <!-- green 100 -->
+    <color name="red600">#E53935</color> <!-- red 600 -->
+    <color name="red200">#EF9A9A</color> <!-- red 200 -->
+    <color name="red100">#FFCDD2</color> <!-- red 100 -->
+
+    <color name="bg_areas_shadow">#757575</color> <!-- grey 600 -->
+    <!-- grey 300 -->
+
+    <color name="app_bg_end">#BDBDBD</color> <!-- grey 4616100 -->
+    <color name="app_bg_start">#E0E0E0</color> <!-- grey 300 -->
+    <color name="list_group">#E0E0E0</color> <!-- grey 200 -->
+    <color name="group_item">#F5F5F5</color> <!-- grey 100 -->
+
+    <!-- button and icon colours -->
+    <color name="btn_bg_on">#E0E0E0</color> <!-- grey 300 -->
+    <color name="btn_icon_on">#757575</color> <!-- grey 600 -->
+
+    <!-- experience colors -->
+    <color name="btn_bg_exp_off">#FFECB3</color> <!-- amber 100 -->
+    <color name="btn_icon_exp_off">#FFB300</color> <!-- amber 600 -->
+
+    <!-- relationship -->
+    <color name="btn_bg_rel_off">#BBDEFB</color> <!-- blue 100 -->
+    <color name="btn_icon_rel_off">#1E88E5</color> <!-- blue 600 -->
+
+    <!-- gender / age -->
+    <color name="btn_bg_genage_off">#E1BEE7</color> <!-- purple 100 -->
+    <color name="btn_icon_genage_off">#AB47BC</color> <!-- purple 400 -->
+    <color name="btn_edit_text">#70ffffff</color> <!-- 70% white -->
+
+    <!-- type / setting colors -->
+    <color name="btn_bg_type_off">#C8E6C9</color> <!-- green 100 -->
+    <color name="btn_icon_type_off">#43A047</color> <!-- green 600 -->
+
+    <!-- typicality colors -->
+    <color name="bg_typical_icon">#D7CCC8</color> <!-- brown 100 -->
+    <color name="icon_typical">#6D4C41</color> <!-- brown 600 -->
+
+    <!-- status colors -->
+    <color name="bg_status_icon">#CFD8DC</color> <!-- blue grey 100 -->
+    <color name="icon_status_me">#546E7A</color> <!-- blue grey 600 -->
+    <color name="bg_seekbar">#EEEEEE</color> <!-- grey 200 -->
+
+    <!-- duration colors -->
+    <color name="bg_clock_face">#50FFFFFF</color><!-- 50% white -->
+    <color name="bg_duration_icon">#FFCCBC</color> <!-- deep orange 100 -->
+    <color name="clock_ticks">#FF8A65</color> <!-- deep orange 300 -->
+    <color name="elapsed_time">#65F4511E</color><!-- 65 % of deep orange 600 -->
+    <color name="bg_duration_clock">#F4511E</color> <!-- deep orange 600 -->
+    <color name="bg_seekbar_dur1">#BDBDBD</color> <!-- grey 400 -->
+    <color name="bg_seekbar_dur2">#E0E0E0</color> <!-- grey 300 -->
+    <color name="bg_seekbar_dur3">#EEEEEE</color> <!-- grey 200 -->
+
+    <!-- generic button colors -->
+    <color name="btn_pressed">#9E9E9E</color> <!-- grey 500 -->
+    <color name="btn_not_pressed">#616161</color> <!-- grey 700 -->
+
+    <color name="grey_transparent">#55000000</color>
+    <color name="grey_dark_transparent">#88000000</color>
+</resources>

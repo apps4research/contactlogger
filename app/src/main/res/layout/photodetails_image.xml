@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <uk.ac.exeter.contactlogger.utils.touchImageView
+        android:id="@+id/imgDisplay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter" />
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="38dip"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="15dip"
+        android:layout_marginTop="15dip"
+        android:paddingTop="2dip"
+        android:paddingBottom="2dip"
+        android:background="@drawable/btn_close_photo"
+        android:textColor="@color/white"
+        android:text="@string/action_close" />
+
+</RelativeLayout>

@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map_container"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context=".MapActivity">
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        tools:layout="@layout/map_layout" />
+
+    <!-- Info text -->
+    <TextView
+        android:id="@+id/loc_infotext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@color/grey_dark_transparent"
+        android:paddingBottom="@dimen/frame_top_margin"
+        android:paddingTop="@dimen/frame_top_margin"
+        android:paddingRight="@dimen/frame_right_margin"
+        android:paddingLeft="@dimen/frame_right_margin"
+        android:textSize="16sp"
+        android:text="@string/loc_infotext"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/relativeLayout" />
+
+    <!-- Close button for textview -->
+    <RelativeLayout
+        android:layout_width="40dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/relativeLayout"
+        android:background="@color/grey_dark_transparent"
+        android:layout_alignBottom="@+id/loc_infotext">
+
+        <Button android:id="@+id/btn_x_close"
+            android:layout_height="20dip"
+            android:layout_width="20dip"
+            android:layout_marginTop="15dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/btn_close_map"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="closeInfoBox" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/map_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp" />
+
+    <!-- Log contact button -->
+    <Button
+        android:id="@+id/logit"
+        style="@style/ButtonText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dip"
+        android:layout_marginEnd="@dimen/frame_right_margin"
+        android:layout_marginStart="@dimen/frame_right_margin"
+        android:layout_marginTop="@dimen/frame_left_margin"
+        android:background="@drawable/btn_log_contact"
+        android:minHeight="@dimen/btn_generic_height"
+        android:onClick="updateContact"
+        android:text="@string/btn_update_contact"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

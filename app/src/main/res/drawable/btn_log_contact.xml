@@ -1,0 +1,15 @@
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:colorControlHighlight">
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/btn_pressed" />
+            <corners android:radius="@dimen/btn_generic_corner" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="@color/btn_not_pressed" />
+            <corners android:radius="@dimen/btn_generic_corner" />
+        </shape>
+    </item>
+</ripple>

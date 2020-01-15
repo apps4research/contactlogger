@@ -1,0 +1,8 @@
+<shape xmlns:android = "http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <size
+        android:width="9dip"
+        android:height="9dip"  />
+    <corners android:radius="1dip" />
+    <solid android:color="@color/icon_status_me"/>
+</shape >

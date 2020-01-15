@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/normal_map"
+            android:title="@string/map_normal" />
+        <item
+            android:id="@+id/hybrid_map"
+            android:title="@string/map_hybrid" />
+        <item
+            android:id="@+id/mapbox_map"
+            android:title="@string/map_mapbox" />
+        <item
+            android:id="@+id/osm_map"
+            android:title="@string/map_osm" />
+
+        <item
+            android:id="@+id/off_map"
+            android:title="@string/map_hl" />
+    </group>
+</menu>

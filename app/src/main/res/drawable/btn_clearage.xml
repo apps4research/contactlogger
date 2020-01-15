@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- button background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/btn_icon_genage_off" />
+            <corners android:radius="@dimen/btn_corner" />
+        </shape>
+    </item>
+    <!-- close button -->
+    <item android:drawable="@drawable/clear_x" />
+</layer-list>

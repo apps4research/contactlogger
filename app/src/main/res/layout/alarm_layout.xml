@@ -1,0 +1,241 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/alarm_wrapper_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dip"
+        android:layout_marginStart="25dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/bg_alarm_start"
+        android:gravity="center_horizontal"
+        android:padding="10dip">
+
+        <TextView
+            android:id="@+id/start_time"
+            android:layout_width="65dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/hour_start"
+            android:layout_marginRight="12dip"
+            android:gravity="right"
+            android:text="@string/alarm_start"
+            android:textColor="@color/green600"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/hour_start"
+            android:layout_width="56dip"
+            android:layout_height="30dip"
+            android:layout_toRightOf="@+id/start_time"
+            android:background="@drawable/bg_white"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="2"
+            android:nextFocusDown="@+id/minute_start"
+            android:padding="2dip"
+            android:ems="5"
+            android:gravity="left|center_vertical"
+            android:textColorHint="@color/green400"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/minute_start"
+            android:layout_width="56dip"
+            android:layout_height="30dip"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@+id/hour_start"
+            android:background="@drawable/bg_white"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="2"
+            android:nextFocusDown="@+id/hour_stop"
+            android:padding="2dip"
+            android:ems="5"
+            android:gravity="left|center_vertical"
+            android:textColorHint="@color/green400"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/clear_start"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignTop="@+id/minute_start"
+            android:layout_marginLeft="8dip"
+            android:layout_toRightOf="@+id/minute_start"
+            android:background="@drawable/btn_start_alarm" />
+
+    </RelativeLayout>
+
+    <!-- stop time -->
+    <RelativeLayout
+        android:id="@+id/alarm_wrapper_stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_wrapper_start"
+        android:layout_marginEnd="25dip"
+        android:layout_marginStart="25dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/bg_alarm_stop"
+        android:gravity="center_horizontal"
+        android:padding="10dip">
+
+        <TextView
+            android:id="@+id/stop_time"
+            android:layout_width="65dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/hour_stop"
+            android:layout_marginRight="12dip"
+            android:gravity="right"
+            android:text="@string/alarm_stop"
+            android:textColor="@color/red600"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/hour_stop"
+            android:layout_width="56dip"
+            android:layout_height="30dip"
+            android:layout_toRightOf="@+id/stop_time"
+            android:background="@drawable/bg_white"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="2"
+            android:nextFocusDown="@+id/minute_stop"
+            android:padding="2dip"
+            android:ems="5"
+            android:gravity="left|center_vertical"
+            android:textColorHint="@color/red200"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/minute_stop"
+            android:layout_width="56dip"
+            android:layout_height="30dip"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@+id/hour_stop"
+            android:background="@drawable/bg_white"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="2"
+            android:padding="2dip"
+            android:ems="5"
+            android:gravity="left|center_vertical"
+            android:textColorHint="@color/red200"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/clear_stop"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignTop="@+id/minute_stop"
+            android:layout_marginLeft="8dip"
+            android:layout_toRightOf="@+id/minute_stop"
+            android:background="@drawable/btn_stop_alarm" />
+
+    </RelativeLayout>
+
+    <!-- interval time -->
+    <RelativeLayout
+        android:id="@+id/alarm_wrapper_int"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_wrapper_stop"
+        android:layout_marginEnd="25dip"
+        android:layout_marginStart="25dip"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/bg_on"
+        android:gravity="center_horizontal"
+        android:padding="10dip">
+
+        <TextView
+            android:id="@+id/int_time"
+            android:layout_width="65dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/hour_int"
+            android:layout_marginRight="12dip"
+            android:gravity="right"
+            android:text="@string/alarm_int"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/hour_int"
+            android:layout_width="56dip"
+            android:layout_height="30dip"
+            android:layout_toRightOf="@+id/int_time"
+            android:background="@drawable/bg_white"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="2"
+            android:nextFocusDown="@+id/minute_int"
+            android:padding="2dip"
+            android:ems="5"
+            android:gravity="left|center_vertical"
+            android:textColorHint="@color/grey_transparent"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/minute_int"
+            android:layout_width="56dip"
+            android:layout_height="30dip"
+            android:layout_marginLeft="10dip"
+            android:layout_toRightOf="@+id/hour_int"
+            android:background="@drawable/bg_white"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="2"
+            android:padding="2dip"
+            android:ems="5"
+            android:gravity="left|center_vertical"
+            android:textColorHint="@color/grey_transparent"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/clear_int"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignTop="@+id/minute_int"
+            android:layout_marginLeft="8dip"
+            android:layout_toRightOf="@+id/minute_int"
+            android:background="@drawable/btn_int_alarm" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/set_alarm_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_wrapper_int"
+        android:layout_marginBottom="12dip"
+        android:layout_marginEnd="10dip"
+        android:layout_marginStart="26dip"
+        android:layout_marginTop="18dip"
+        android:text="@string/alarm_active"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <RadioGroup
+        android:id="@+id/alarm_active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dip"
+        android:layout_below="@+id/alarm_wrapper_int"
+        android:layout_toRightOf="@+id/set_alarm_txt"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/set_alarm_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yes" />
+
+        <RadioButton
+            android:id="@+id/set_alarm_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/no" />
+    </RadioGroup>
+
+</RelativeLayout>
